@@ -22,12 +22,15 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
   const [status, setStatus] = useState(searchParams.get("status") ?? "");
   const [typeId, setTypeId] = useState(searchParams.get("typeId") ?? "");
   const [prioritario, setPrioritario] = useState(searchParams.get("prioritario") ?? "");
+  const [hasAttachment, setHasAttachment] = useState(searchParams.get("hasAttachment") ?? "");
   const [uf, setUf] = useState(searchParams.get("uf") ?? "");
   const [municipality, setMunicipality] = useState(searchParams.get("municipality") ?? "");
   const [dueFrom, setDueFrom] = useState(searchParams.get("dueFrom") ?? "");
   const [dueTo, setDueTo] = useState(searchParams.get("dueTo") ?? "");
 
-  const activeFilterCount = [q, status, typeId, prioritario, uf, municipality, dueFrom, dueTo].filter(Boolean).length;
+  const activeFilterCount = [q, status, typeId, prioritario, hasAttachment, uf, municipality, dueFrom, dueTo].filter(
+    Boolean
+  ).length;
 
   function apply() {
     const params = new URLSearchParams(searchParams.toString());
@@ -39,6 +42,7 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
     set("status", status);
     set("typeId", typeId);
     set("prioritario", prioritario);
+    set("hasAttachment", hasAttachment);
     set("uf", uf);
     set("municipality", municipality);
     set("dueFrom", dueFrom);
@@ -49,7 +53,18 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
 
   function clearAll() {
     const params = new URLSearchParams(searchParams.toString());
-    for (const key of ["q", "status", "typeId", "prioritario", "uf", "municipality", "dueFrom", "dueTo", "archived"]) {
+    for (const key of [
+      "q",
+      "status",
+      "typeId",
+      "prioritario",
+      "hasAttachment",
+      "uf",
+      "municipality",
+      "dueFrom",
+      "dueTo",
+      "archived",
+    ]) {
       params.delete(key);
     }
     params.set("page", "1");
@@ -57,6 +72,7 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
     setStatus("");
     setTypeId("");
     setPrioritario("");
+    setHasAttachment("");
     setUf("");
     setMunicipality("");
     setDueFrom("");
@@ -115,6 +131,14 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
                 <option value="">Todos</option>
                 <option value="true">Só prioritários</option>
                 <option value="false">Não prioritários</option>
+              </Select>
+            </div>
+            <div>
+              <label className="mb-1 block text-xs font-medium text-slate-700">Anexo</label>
+              <Select value={hasAttachment} onChange={(e) => setHasAttachment(e.target.value)}>
+                <option value="">Todos</option>
+                <option value="false">Sem anexo</option>
+                <option value="true">Com anexo</option>
               </Select>
             </div>
             <div>

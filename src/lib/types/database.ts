@@ -299,6 +299,8 @@ export interface AlvaraWithCompany extends Alvara {
   type_name: string;
   type_color: string;
   type_shared_attachment: boolean;
+  /** True when this alvará has its own attachment, or inherits one via type_shared_attachment (see resolveEffectiveAttachment). */
+  has_attachment: boolean;
   company_code: string;
   company_document: string;
   company_document_type: DocumentType;

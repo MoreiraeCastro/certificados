@@ -32,6 +32,7 @@ function applyFilters(query: any, filters: AlvaraFilters) {
   if (filters.typeId) query = query.eq("type_id", filters.typeId);
   if (filters.prioritario !== undefined) query = query.eq("prioritario", filters.prioritario);
   if (filters.archived !== undefined) query = query.eq("archived", filters.archived);
+  if (filters.hasAttachment !== undefined) query = query.eq("has_attachment", filters.hasAttachment);
   if (filters.uf) query = query.eq("uf", filters.uf.toUpperCase());
   if (filters.municipality) query = query.ilike("municipality", `%${filters.municipality}%`);
   if (filters.dueFrom) query = query.gte("valid_to", filters.dueFrom);

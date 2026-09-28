@@ -17,6 +17,7 @@ export interface AlvaraFilters {
   typeId?: string;
   prioritario?: boolean;
   archived?: boolean;
+  hasAttachment?: boolean;
   uf?: string;
   municipality?: string;
   dueFrom?: string;
@@ -54,6 +55,9 @@ export function parseAlvaraFilters(searchParams: SearchParams): AlvaraFilters {
     typeId: firstValue(searchParams.typeId) || undefined,
     prioritario: firstValue(searchParams.prioritario) ? firstValue(searchParams.prioritario) === "true" : undefined,
     archived: firstValue(searchParams.archived) ? firstValue(searchParams.archived) === "true" : undefined,
+    hasAttachment: firstValue(searchParams.hasAttachment)
+      ? firstValue(searchParams.hasAttachment) === "true"
+      : undefined,
     uf: firstValue(searchParams.uf) || undefined,
     municipality: firstValue(searchParams.municipality) || undefined,
     dueFrom: firstValue(searchParams.dueFrom) || undefined,
