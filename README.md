@@ -105,7 +105,11 @@ RLS habilitado em todas as tabelas. Qualquer usuário autenticado pode ler/grava
 
 Pré-requisitos: Node.js 20+ e um projeto Supabase (gratuito serve para começar).
 
+Repositório: https://github.com/MoreiraeCastro/certificados
+
 ```bash
+git clone https://github.com/MoreiraeCastro/certificados.git
+cd certificados
 npm install
 cp .env.example .env.local   # preencha com as chaves do seu projeto Supabase
 npm run dev
