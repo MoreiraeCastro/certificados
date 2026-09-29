@@ -22,6 +22,11 @@ const CATEGORY_CHIP_CLASSES: Record<CalendarItem["category"], string> = {
   alvaras: "bg-amber-50 text-amber-700 hover:bg-amber-100",
 };
 
+const CATEGORY_SOLID_CLASSES: Record<CalendarItem["category"], string> = {
+  certificados: "bg-blue-600 text-white hover:bg-blue-700",
+  alvaras: "bg-amber-600 text-white hover:bg-amber-700",
+};
+
 function formatDate(value: string): string {
   const [year, month, day] = value.split("-");
   return `${day}/${month}/${year}`;
@@ -82,101 +87,101 @@ export function VencimentosCalendar({
 
   return (
     <div className="rounded-lg border border-slate-200 bg-white">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-4 py-3">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => navigate(-1)}
-            className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
-            title="Anterior"
-          >
-            <ChevronLeft size={16} />
-          </button>
-          <p className="min-w-40 text-center text-sm font-semibold capitalize text-slate-900">{monthLabel}</p>
-          <button
-            type="button"
-            onClick={() => navigate(1)}
-            className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
-            title="Próximo"
-          >
-            <ChevronRight size={16} />
-          </button>
+      <div className="flex items-center justify-center gap-3 border-b border-slate-100 px-4 py-4">
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+          title="Anterior"
+        >
+          <ChevronLeft size={18} />
+        </button>
+        <p className="min-w-48 text-center text-lg font-bold capitalize text-slate-900">{monthLabel}</p>
+        <button
+          type="button"
+          onClick={() => navigate(1)}
+          className="rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+          title="Próximo"
+        >
+          <ChevronRight size={18} />
+        </button>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-2 border-b border-slate-100 px-4 py-2.5">
+        <div className="flex rounded-md border border-slate-200 p-0.5 text-xs">
           <button
             type="button"
             onClick={() => pushParams({ date: today })}
-            className="rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 hover:bg-slate-50"
+            className="rounded px-2.5 py-1 font-medium text-slate-600 hover:bg-slate-100"
           >
             Hoje
           </button>
-        </div>
-
-        <div className="flex items-center gap-2 text-xs">
-          <div className="flex rounded-md border border-slate-200 p-0.5">
-            <button
-              type="button"
-              onClick={() => pushParams({ view: "month" })}
-              className={cn(
-                "rounded px-2 py-1 font-medium",
-                view === "month" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-              )}
-            >
-              Mês
-            </button>
-            <button
-              type="button"
-              onClick={() => pushParams({ view: "week" })}
-              className={cn(
-                "rounded px-2 py-1 font-medium",
-                view === "week" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-              )}
-            >
-              Semana
-            </button>
-          </div>
-
-          <div className="flex rounded-md border border-slate-200 p-0.5">
-            <button
-              type="button"
-              onClick={() => pushParams({ display: "calendar" })}
-              className={cn(
-                "rounded px-2 py-1 font-medium",
-                display === "calendar" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-              )}
-            >
-              Calendário
-            </button>
-            <button
-              type="button"
-              onClick={() => pushParams({ display: "list" })}
-              className={cn(
-                "rounded px-2 py-1 font-medium",
-                display === "list" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-              )}
-            >
-              Lista
-            </button>
-          </div>
-
-          <label className="flex items-center gap-1.5 rounded-md border border-slate-200 px-2 py-1.5 font-medium text-slate-600">
-            <input
-              type="checkbox"
-              checked={showOverdue}
-              onChange={(e) => pushParams({ showOverdue: e.target.checked ? undefined : "false" })}
-              className="h-3.5 w-3.5 rounded border-slate-300"
-            />
-            Mostrar vencidos
-          </label>
+          <button
+            type="button"
+            onClick={() => pushParams({ view: "month" })}
+            className={cn(
+              "rounded px-2.5 py-1 font-medium",
+              view === "month" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+            )}
+          >
+            Mês
+          </button>
+          <button
+            type="button"
+            onClick={() => pushParams({ view: "week" })}
+            className={cn(
+              "rounded px-2.5 py-1 font-medium",
+              view === "week" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+            )}
+          >
+            Semana
+          </button>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 px-4 py-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 px-4 py-2.5 text-xs">
+        <div className="flex rounded-md border border-slate-200 p-0.5">
+          <button
+            type="button"
+            onClick={() => pushParams({ display: "calendar" })}
+            className={cn(
+              "rounded px-2 py-1 font-medium",
+              display === "calendar" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+            )}
+          >
+            Calendário
+          </button>
+          <button
+            type="button"
+            onClick={() => pushParams({ display: "list" })}
+            className={cn(
+              "rounded px-2 py-1 font-medium",
+              display === "list" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
+            )}
+          >
+            Lista
+          </button>
+        </div>
+
+        <label className="flex items-center gap-1.5 rounded-md border border-slate-200 px-2 py-1.5 font-medium text-slate-600">
+          <input
+            type="checkbox"
+            checked={showOverdue}
+            onChange={(e) => pushParams({ showOverdue: e.target.checked ? undefined : "false" })}
+            className="h-3.5 w-3.5 rounded border-slate-300"
+          />
+          Mostrar vencidos
+        </label>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 px-4 py-2.5">
         {(Object.keys(CATEGORY_LABELS) as CalendarItem["category"][]).map((category) => (
           <button
             key={category}
             type="button"
             onClick={() => toggleCategory(category)}
             className={cn(
-              "flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium transition-opacity",
+              "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide transition-opacity",
               CATEGORY_CHIP_CLASSES[category],
               hiddenCategories.has(category) && "opacity-40"
             )}
@@ -212,8 +217,11 @@ export function VencimentosCalendar({
       ) : (
         <div className="grid grid-cols-7 border-t border-slate-100 text-xs">
           {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((weekday) => (
-            <div key={weekday} className="border-b border-slate-100 px-2 py-1.5 text-center font-medium text-slate-500">
-              {weekday}
+            <div
+              key={weekday}
+              className="border-b border-slate-100 bg-slate-50 px-2 py-2 text-center text-[11px] font-semibold uppercase tracking-wide text-slate-500"
+            >
+              {weekday}.
             </div>
           ))}
           {days.map((day) => {
@@ -224,28 +232,28 @@ export function VencimentosCalendar({
               <div
                 key={day}
                 className={cn(
-                  "min-h-24 border-b border-r border-slate-100 p-1.5 last:border-r-0",
+                  "min-h-28 border-b border-r border-slate-100 p-2 last:border-r-0",
                   !inCurrentMonth && "bg-slate-50/60"
                 )}
               >
                 <p
                   className={cn(
-                    "mb-1 inline-flex h-5 w-5 items-center justify-center rounded-full text-xs",
-                    isCurrentDay ? "bg-slate-900 font-semibold text-white" : "text-slate-500",
+                    "mb-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium",
+                    isCurrentDay ? "bg-slate-900 font-semibold text-white" : "text-slate-600",
                     !inCurrentMonth && !isCurrentDay && "text-slate-300"
                   )}
                 >
                   {format(parseISO(day), "d")}
                 </p>
-                <div className="max-h-16 space-y-1 overflow-y-auto">
+                <div className="max-h-20 space-y-1 overflow-y-auto">
                   {dayItems.map((item) => (
                     <Link
                       key={item.id}
                       href={item.href}
                       title={item.label}
                       className={cn(
-                        "block truncate rounded px-1.5 py-0.5 text-[11px] font-medium",
-                        CATEGORY_CHIP_CLASSES[item.category]
+                        "block truncate rounded-md px-1.5 py-1 text-[11px] font-semibold shadow-sm",
+                        CATEGORY_SOLID_CLASSES[item.category]
                       )}
                     >
                       {item.label}
