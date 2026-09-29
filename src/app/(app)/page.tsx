@@ -23,7 +23,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
 
   const view: CalendarView = firstValue(params.view) === "week" ? "week" : "month";
   const display = firstValue(params.display) === "list" ? "list" : "calendar";
-  const showOverdue = firstValue(params.showOverdue) !== "false";
+  const showOverdue = firstValue(params.showOverdue) === "true";
   const referenceDateParam = firstValue(params.date);
   const referenceDate = referenceDateParam && !Number.isNaN(Date.parse(referenceDateParam))
     ? new Date(`${referenceDateParam}T00:00:00`)

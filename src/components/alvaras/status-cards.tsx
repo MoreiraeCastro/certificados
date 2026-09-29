@@ -91,13 +91,13 @@ export function AlvaraStatusCards({
             key={card.key}
             href={`?${card.query.toString()}`}
             className={cn(
-              "rounded-lg border px-4 py-3 shadow-sm transition-colors hover:border-slate-400",
+              "rounded-lg border px-5 py-4 shadow-sm transition-colors hover:border-slate-400",
               card.bgClasses,
               isActive ? card.activeClasses : "border-slate-200"
             )}
           >
             <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{card.label}</p>
-            <p className="mt-1 text-2xl font-semibold text-slate-900">{card.value.toLocaleString("pt-BR")}</p>
+            <p className="mt-1 text-3xl font-bold text-slate-900">{card.value.toLocaleString("pt-BR")}</p>
           </Link>
         );
       })}

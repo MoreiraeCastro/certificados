@@ -167,7 +167,7 @@ export function VencimentosCalendar({
           <input
             type="checkbox"
             checked={showOverdue}
-            onChange={(e) => pushParams({ showOverdue: e.target.checked ? undefined : "false" })}
+            onChange={(e) => pushParams({ showOverdue: e.target.checked ? "true" : undefined })}
             className="h-3.5 w-3.5 rounded border-slate-300"
           />
           Mostrar vencidos
