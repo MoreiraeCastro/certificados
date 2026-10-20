@@ -53,6 +53,8 @@ export async function listCertificates(
   query = applyFilters(query, filters);
 
   const primarySort = filters.sort === "status_priority" ? "status_priority" : filters.sort;
+  // Código: ordem numérica (1, 2, …, 1000) pela coluna company_code_sort da view, não alfabética.
+  if (primarySort === "company_code") query = query.order("company_code_sort", { ascending: filters.dir === "asc", nullsFirst: false });
   query = query.order(primarySort, { ascending: filters.dir === "asc" });
   if (primarySort !== "valid_to") {
     query = query.order("valid_to", { ascending: true });

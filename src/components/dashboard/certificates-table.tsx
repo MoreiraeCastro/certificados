@@ -71,10 +71,18 @@ function SortableHeader({
     return <span>{column.label}</span>;
   }
 
-  const nextDir = currentSort === column.key && currentDir === "asc" ? "desc" : "asc";
+  // 1º clique: crescente; 2º: decrescente; 3º: volta à ordem padrão (sem sort na URL).
   const params = new URLSearchParams(currentQuery);
-  params.set("sort", column.key);
-  params.set("dir", nextDir);
+  if (currentSort !== column.key) {
+    params.set("sort", column.key);
+    params.set("dir", "asc");
+  } else if (currentDir === "asc") {
+    params.set("sort", column.key);
+    params.set("dir", "desc");
+  } else {
+    params.delete("sort");
+    params.delete("dir");
+  }
   params.set("page", "1");
 
   return (
