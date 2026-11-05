@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, UploadCloud } from "lucide-react";
+import { Plus, UploadCloud } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { NewAlvaraModal } from "./new-alvara-modal";
 import type { AlvaraType } from "@/lib/types/database";

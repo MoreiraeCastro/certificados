@@ -1,4 +1,4 @@
-import { Plus, Paperclip } from "lucide-react";
+import { Plus, Paperclip } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/button";
 import { AlvaraStatusBadge } from "@/components/alvaras/status-badge";
 import { AlvaraRowActions } from "@/components/alvaras/alvara-row-actions";

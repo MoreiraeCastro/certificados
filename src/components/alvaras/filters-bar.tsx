@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { Filter, X } from "lucide-react";
+import { Filter, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input, Select } from "@/components/ui/input";
 import { ALVARA_STATUS_LABELS } from "@/lib/alvaras/status";

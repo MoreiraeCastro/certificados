@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Bell, Users, Stamp } from "lucide-react";
+import { Bell, Users, Stamp } from "@/components/icons";
 
 const CARDS = [
   {

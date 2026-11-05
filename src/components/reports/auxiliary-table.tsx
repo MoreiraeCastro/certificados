@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Download } from "lucide-react";
+import { Download } from "@/components/icons";
 import type { ExportColumn } from "@/lib/export/xlsx";
 import type { ExportCell } from "@/lib/certificates/export-value";
 import type { AuxiliaryReportKind } from "@/lib/reports/auxiliary";

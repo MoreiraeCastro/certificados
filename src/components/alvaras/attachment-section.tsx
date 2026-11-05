@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useTransition } from "react";
-import { Paperclip, Download, Trash2 } from "lucide-react";
+import { Paperclip, Download, Trash2 } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { withBasePath } from "@/lib/utils/base-path";
 import { uploadAlvaraAttachment, removeAlvaraAttachment, type AttachmentFormState } from "@/lib/alvaras/attachments";

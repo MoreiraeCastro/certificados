@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { Search } from "@/components/icons";
 import { formatDocument } from "@/lib/documents/document";
 import { withBasePath } from "@/lib/utils/base-path";
 import type { Company } from "@/lib/types/database";

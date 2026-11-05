@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Pencil, Plus } from "lucide-react";
+import { Pencil, Plus } from "@/components/icons";
 import { createClient } from "@/lib/supabase/server";
 import { formatDocument } from "@/lib/documents/document";
 import { StatusBadge } from "@/components/certificates/status-badge";

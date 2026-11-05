@@ -1,4 +1,4 @@
-import { FileCheck2, Stamp } from "lucide-react";
+import { FileCheck2, Stamp } from "@/components/icons";
 import { createClient } from "@/lib/supabase/server";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { getCertificateStatusCounts } from "@/lib/certificates/queries";

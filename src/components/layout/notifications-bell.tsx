@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { Bell, Download } from "lucide-react";
+import { Bell, Download } from "@/components/icons";
 import { StatusBadge } from "@/components/certificates/status-badge";
 import {
   markNotificationRead,

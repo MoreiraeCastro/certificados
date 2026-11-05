@@ -17,7 +17,7 @@ import {
   FolderKanban,
   ChevronDown,
   ChevronRight,
-} from "lucide-react";
+} from "@/components/icons";
 import { cn } from "@/lib/utils/cn";
 
 const DASHBOARD_ITEM = { href: "/", label: "Dashboard", icon: LayoutDashboard, exact: true } as const;

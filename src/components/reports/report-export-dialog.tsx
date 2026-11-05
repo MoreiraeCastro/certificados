@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Download, X } from "lucide-react";
+import { Download, X } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Input, Label, Select } from "@/components/ui/input";
 import type { ReportBase } from "@/lib/reports/engine";

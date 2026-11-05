@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import Link from "next/link";
-import { Archive, ArchiveRestore, Eye, Pencil, Trash2 } from "lucide-react";
+import { Archive, ArchiveRestore, Eye, Pencil, Trash2 } from "@/components/icons";
 import { archiveAlvara, restoreAlvara, deleteAlvara } from "@/lib/alvaras/actions";
 
 export function AlvaraRowActions({

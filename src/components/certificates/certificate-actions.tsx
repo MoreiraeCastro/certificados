@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import Link from "next/link";
-import { Archive, ArchiveRestore, Pencil } from "lucide-react";
+import { Archive, ArchiveRestore, Pencil } from "@/components/icons";
 import { archiveCertificate, restoreCertificate } from "@/lib/certificates/actions";
 
 export function CertificateActions({

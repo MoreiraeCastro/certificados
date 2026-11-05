@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown } from "@/components/icons";
 import { formatDocument } from "@/lib/documents/document";
 import { AlvaraStatusBadge } from "@/components/alvaras/status-badge";
 import { AlvaraRowActions } from "@/components/alvaras/alvara-row-actions";

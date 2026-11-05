@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Search, X, UploadCloud, FileText } from "lucide-react";
+import { Search, X, UploadCloud, FileText } from "@/components/icons";
 import { Modal } from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import { Input, Label, FieldError, Select, Textarea } from "@/components/ui/input";

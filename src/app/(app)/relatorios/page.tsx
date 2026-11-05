@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "@/components/icons";
 import { createClient } from "@/lib/supabase/server";
 import { resolveDueQuickFilter } from "@/lib/certificates/filters";
 import { deleteReportPreset } from "@/lib/reports/presets";

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { UploadCloud, ArrowRight, CheckCircle2, AlertTriangle } from "lucide-react";
+import { UploadCloud, ArrowRight, CheckCircle2, AlertTriangle } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/input";
 import { ALVARA_IMPORT_TARGET_FIELDS } from "@/lib/alvaras/import-fields";

@@ -2,7 +2,7 @@
 
 import { useTransition } from "react";
 import Link from "next/link";
-import { Download } from "lucide-react";
+import { Download } from "@/components/icons";
 import { cn } from "@/lib/utils/cn";
 import { StatusBadge } from "@/components/certificates/status-badge";
 import {

@@ -1,4 +1,4 @@
-import { LogOut } from "lucide-react";
+import { LogOut } from "@/components/icons";
 import { signOut } from "@/app/login/actions";
 import { GlobalSearch } from "./global-search";
 import { NotificationsBell } from "./notifications-bell";

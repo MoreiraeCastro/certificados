@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown } from "@/components/icons";
 import { formatDocument } from "@/lib/documents/document";
 import { StatusBadge } from "@/components/certificates/status-badge";
 import { CertificateRowActions } from "@/components/dashboard/certificate-row-actions";

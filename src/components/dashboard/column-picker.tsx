@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Columns3, ChevronUp, ChevronDown } from "lucide-react";
+import { Columns3, ChevronUp, ChevronDown } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import type { ColumnDef } from "@/lib/certificates/columns";
 import { saveTablePreference } from "@/lib/table-preferences/actions";

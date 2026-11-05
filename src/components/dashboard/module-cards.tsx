@@ -1,12 +1,12 @@
 import Link from "next/link";
-import type { LucideIcon } from "lucide-react";
+import type { Icon } from "@/components/icons";
 import { cn } from "@/lib/utils/cn";
 
 export interface ModuleCardDef {
   key: string;
   label: string;
   value: number;
-  icon: LucideIcon;
+  icon: Icon;
   href: string;
   colorClasses: string;
 }
