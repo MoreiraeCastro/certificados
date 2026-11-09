@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 import { Archive, ArchiveRestore, Eye, Pencil, Trash2 } from "@/components/icons";
 import { archiveCertificate, restoreCertificate, deleteCertificate } from "@/lib/certificates/actions";
+import { confirmar } from "@/components/confirmar";
 
 export function CertificateRowActions({
   certificateId,
@@ -49,8 +50,8 @@ export function CertificateRowActions({
           type="button"
           title="Arquivar"
           disabled={isPending}
-          onClick={() => {
-            if (confirm("Arquivar este certificado?")) {
+          onClick={async () => {
+            if (await confirmar("Arquivar este certificado?", { acao: "Arquivar" })) {
               startTransition(() => archiveCertificate(certificateId, companyId));
             }
           }}
@@ -64,8 +65,8 @@ export function CertificateRowActions({
           type="button"
           title="Excluir"
           disabled={isPending}
-          onClick={() => {
-            if (confirm("Excluir este certificado permanentemente? Esta ação não pode ser desfeita.")) {
+          onClick={async () => {
+            if (await confirmar("Excluir este certificado permanentemente?\nEsta ação não pode ser desfeita.", { acao: "Excluir", perigo: true })) {
               startTransition(() => deleteCertificate(certificateId, companyId));
             }
           }}

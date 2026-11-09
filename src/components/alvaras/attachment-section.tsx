@@ -5,6 +5,7 @@ import { Paperclip, Download, Trash2 } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { withBasePath } from "@/lib/utils/base-path";
 import { uploadAlvaraAttachment, removeAlvaraAttachment, type AttachmentFormState } from "@/lib/alvaras/attachments";
+import { confirmar } from "@/components/confirmar";
 
 function formatSize(bytes: number): string {
   if (bytes < 1024) return `${bytes} B`;
@@ -63,8 +64,8 @@ export function AttachmentSection({
                 type="button"
                 title="Remover"
                 disabled={removing}
-                onClick={() => {
-                  if (confirm("Remover o anexo deste alvará?")) {
+                onClick={async () => {
+                  if (await confirmar("Remover o anexo deste alvará?", { acao: "Remover", perigo: true })) {
                     startRemoving(() => removeAlvaraAttachment(alvaraId, companyId));
                   }
                 }}

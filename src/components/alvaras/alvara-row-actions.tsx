@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 import { Archive, ArchiveRestore, Eye, Pencil, Trash2 } from "@/components/icons";
 import { archiveAlvara, restoreAlvara, deleteAlvara } from "@/lib/alvaras/actions";
+import { confirmar } from "@/components/confirmar";
 
 export function AlvaraRowActions({
   alvaraId,
@@ -49,8 +50,8 @@ export function AlvaraRowActions({
           type="button"
           title="Arquivar"
           disabled={isPending}
-          onClick={() => {
-            if (confirm("Arquivar este alvará?")) {
+          onClick={async () => {
+            if (await confirmar("Arquivar este alvará?", { acao: "Arquivar" })) {
               startTransition(() => archiveAlvara(alvaraId, companyId));
             }
           }}
@@ -64,8 +65,8 @@ export function AlvaraRowActions({
           type="button"
           title="Excluir"
           disabled={isPending}
-          onClick={() => {
-            if (confirm("Excluir este alvará permanentemente? Esta ação não pode ser desfeita.")) {
+          onClick={async () => {
+            if (await confirmar("Excluir este alvará permanentemente?\nEsta ação não pode ser desfeita.", { acao: "Excluir", perigo: true })) {
               startTransition(() => deleteAlvara(alvaraId, companyId));
             }
           }}

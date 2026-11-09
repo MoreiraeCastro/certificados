@@ -7,6 +7,7 @@ import { Modal } from "@/components/ui/modal";
 import { AlvaraTypeForm } from "./type-form";
 import { createAlvaraType, updateAlvaraType, deleteAlvaraType } from "@/lib/alvaras/catalog";
 import type { AlvaraType } from "@/lib/types/database";
+import { confirmar } from "@/components/confirmar";
 
 export function AlvaraTypesManager({ types }: { types: AlvaraType[] }) {
   const [modalType, setModalType] = useState<AlvaraType | "new" | null>(null);
@@ -46,8 +47,8 @@ export function AlvaraTypesManager({ types }: { types: AlvaraType[] }) {
                 type="button"
                 title="Excluir"
                 disabled={isPending}
-                onClick={() => {
-                  if (confirm(`Excluir o tipo "${type.name}"?`)) {
+                onClick={async () => {
+                  if (await confirmar(`Excluir o tipo "${type.name}"?`, { acao: "Excluir", perigo: true })) {
                     startTransition(() => deleteAlvaraType(type.id));
                   }
                 }}

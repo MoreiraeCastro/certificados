@@ -8,6 +8,7 @@ import { GroupForm } from "./group-form";
 import { createPermissionGroup, updatePermissionGroup, deletePermissionGroup } from "@/lib/permission-groups/actions";
 import { AVAILABLE_MODULES } from "@/lib/permission-groups/modules";
 import type { PermissionGroupWithModules } from "@/lib/permission-groups/queries";
+import { confirmar } from "@/components/confirmar";
 
 export function GroupsManager({ groups }: { groups: PermissionGroupWithModules[] }) {
   const [modalGroup, setModalGroup] = useState<PermissionGroupWithModules | "new" | null>(null);
@@ -52,8 +53,8 @@ export function GroupsManager({ groups }: { groups: PermissionGroupWithModules[]
                 type="button"
                 title="Excluir"
                 disabled={isPending}
-                onClick={() => {
-                  if (confirm(`Excluir o grupo "${group.name}"? Usuários deste grupo ficam sem grupo.`)) {
+                onClick={async () => {
+                  if (await confirmar(`Excluir o grupo "${group.name}"?\nUsuários deste grupo ficam sem grupo.`, { acao: "Excluir", perigo: true })) {
                     startTransition(() => deletePermissionGroup(group.id));
                   }
                 }}

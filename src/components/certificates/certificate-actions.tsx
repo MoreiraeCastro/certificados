@@ -4,6 +4,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 import { Archive, ArchiveRestore, Pencil } from "@/components/icons";
 import { archiveCertificate, restoreCertificate } from "@/lib/certificates/actions";
+import { confirmar } from "@/components/confirmar";
 
 export function CertificateActions({
   certificateId,
@@ -40,8 +41,8 @@ export function CertificateActions({
           type="button"
           title="Arquivar"
           disabled={isPending}
-          onClick={() => {
-            if (confirm("Arquivar este certificado?")) {
+          onClick={async () => {
+            if (await confirmar("Arquivar este certificado?", { acao: "Arquivar" })) {
               startTransition(() => archiveCertificate(certificateId, companyId));
             }
           }}
