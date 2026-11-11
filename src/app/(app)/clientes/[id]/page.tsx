@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { formatDocument } from "@/lib/documents/document";
 import { StatusBadge } from "@/components/certificates/status-badge";
 import { CertificateActions } from "@/components/certificates/certificate-actions";
+import { CertificateAttachment } from "@/components/certificates/certificate-attachment";
 import { CompanyAlvarasSection } from "@/components/alvaras/company-alvaras-section";
 import { getCurrentUser } from "@/lib/auth/current-user";
 import { ButtonLink } from "@/components/ui/button";
@@ -73,6 +74,9 @@ export default async function CompanyDetailPage({
   const rows = (certificates ?? []) as CertificateWithCompany[];
   const alvaraRows = (alvaras ?? []) as AlvaraWithCompany[];
   const current = rows.find((c) => c.is_current && !c.archived) ?? rows.find((c) => c.is_current);
+  const { data: currentFile } = current
+    ? await supabase.from("certificates").select("attachment_name, attachment_size").eq("id", current.id).maybeSingle()
+    : { data: null };
   const typedCompany = company as Company & { responsible_profile: { full_name: string } | null };
   const responsibleLabel = typedCompany.responsible_profile?.full_name ?? typedCompany.responsible ?? "-";
 
@@ -146,6 +150,14 @@ export default async function CompanyDetailPage({
               </div>
             </div>
           </div>
+        ) : null}
+        {current ? (
+          <CertificateAttachment
+            certificateId={current.id}
+            companyId={id}
+            attachmentName={currentFile?.attachment_name ?? null}
+            attachmentSize={currentFile?.attachment_size ?? null}
+          />
         ) : (
           <p className="text-sm text-slate-500">Nenhum certificado cadastrado para este cliente.</p>
         )}
