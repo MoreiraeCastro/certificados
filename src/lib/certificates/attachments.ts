@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { logAudit } from "@/lib/audit/log";
 
-export const CERTIFICATE_BUCKET = "certificado-anexos";
+const CERTIFICATE_BUCKET = "certificado-anexos";
 const MAX_SIZE_BYTES = 5 * 1024 * 1024;
 const ALLOWED_EXTENSIONS = [".pfx", ".p12"];
 
