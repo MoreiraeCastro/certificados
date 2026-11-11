@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ClickableRow } from "@/components/ui/clickable-row";
 import { ArrowUpDown } from "@/components/icons";
 import { formatDocument } from "@/lib/documents/document";
 import { AlvaraStatusBadge } from "@/components/alvaras/status-badge";
@@ -137,7 +138,7 @@ export function AlvarasTable({
         </thead>
         <tbody>
           {rows.map((row) => (
-            <tr key={row.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+            <ClickableRow key={row.id} href={`/clientes/${row.company_id}`} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
               {columns.map((col) => (
                 <td key={col.key} className="whitespace-nowrap px-4 py-2.5 text-slate-700">
                   {renderCell(row, col.key)}
@@ -146,7 +147,7 @@ export function AlvarasTable({
               <td className="whitespace-nowrap px-4 py-2.5">
                 <AlvaraRowActions alvaraId={row.id} companyId={row.company_id} archived={row.archived} isAdmin={isAdmin} />
               </td>
-            </tr>
+            </ClickableRow>
           ))}
         </tbody>
       </table>

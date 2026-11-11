@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ClickableRow } from "@/components/ui/clickable-row";
 import { createClient } from "@/lib/supabase/server";
 import { parseCompanyFilters, listCompanies } from "@/lib/companies/queries";
 import { getCertificateThresholds } from "@/lib/settings/thresholds";
@@ -80,7 +81,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Pr
           </thead>
           <tbody>
             {rows.map((company) => (
-              <tr key={company.id} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+              <ClickableRow key={company.id} href={`/clientes/${company.id}`} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
                 <td className="px-4 py-2.5 font-medium text-slate-900">
                   <Link href={`/clientes/${company.id}`} className="hover:underline">
                     {company.code}
@@ -102,7 +103,7 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Pr
                     <span className="text-slate-400">Inativa</span>
                   )}
                 </td>
-              </tr>
+              </ClickableRow>
             ))}
             {rows.length === 0 && (
               <tr>
