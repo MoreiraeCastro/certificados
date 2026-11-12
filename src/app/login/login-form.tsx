@@ -5,6 +5,7 @@ import Link from "next/link";
 import { signIn, type LoginState } from "./actions";
 import { Button } from "@/components/ui/button";
 import { Input, Label } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 
 const initialState: LoginState = {};
 
@@ -20,7 +21,7 @@ export function LoginForm({ next }: { next: string }) {
       </div>
       <div>
         <Label htmlFor="password">Senha</Label>
-        <Input id="password" name="password" type="password" autoComplete="current-password" required />
+        <PasswordInput id="password" name="password" autoComplete="current-password" required />
       </div>
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}
       <Button type="submit" className="w-full" disabled={pending}>
