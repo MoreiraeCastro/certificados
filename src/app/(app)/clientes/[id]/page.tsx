@@ -157,6 +157,7 @@ export default async function CompanyDetailPage({
             companyId={id}
             attachmentName={currentFile?.attachment_name ?? null}
             attachmentSize={currentFile?.attachment_size ?? null}
+            isAdmin={user.profile.role === "admin"}
           />
         ) : (
           <p className="text-sm text-slate-500">Nenhum certificado cadastrado para este cliente.</p>

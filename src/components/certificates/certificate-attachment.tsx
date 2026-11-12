@@ -21,11 +21,13 @@ export function CertificateAttachment({
   companyId,
   attachmentName,
   attachmentSize,
+  isAdmin,
 }: {
   certificateId: string;
   companyId: string;
   attachmentName: string | null;
   attachmentSize: number | null;
+  isAdmin: boolean;
 }) {
   const uploadAction = uploadCertificateAttachment.bind(null, certificateId, companyId);
   const [state, formAction, pending] = useActionState<CertificateAttachmentState, FormData>(uploadAction, {});
@@ -51,7 +53,7 @@ export function CertificateAttachment({
             >
               <Download size={14} />
             </a>
-            <button
+            {isAdmin && <button
               type="button"
               title="Remover"
               disabled={removing}
@@ -63,7 +65,7 @@ export function CertificateAttachment({
               className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-red-700"
             >
               <Trash2 size={14} />
-            </button>
+            </button>}
           </div>
         </div>
       ) : (

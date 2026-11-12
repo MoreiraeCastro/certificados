@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { logAudit } from "@/lib/audit/log";
 
 const BUCKET = "certificado-anexos";
@@ -20,7 +21,8 @@ export async function GET(_request: NextRequest, { params }: { params: Promise<{
     .maybeSingle();
   if (!certificate?.attachment_path) return NextResponse.json({ error: "Nenhum arquivo anexado." }, { status: 404 });
 
-  const { data: signed, error } = await supabase.storage
+  // Sem política no bucket para usuários: o link sai pela chave de serviço, depois de o usuário enxergar o certificado.
+  const { data: signed, error } = await createAdminClient().storage
     .from(BUCKET)
     .createSignedUrl(certificate.attachment_path, 60, { download: certificate.attachment_name ?? true });
   if (error || !signed) return NextResponse.json({ error: "Não foi possível gerar o link do arquivo." }, { status: 500 });
