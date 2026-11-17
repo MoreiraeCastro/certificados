@@ -77,14 +77,14 @@ export default async function ReportsPage() {
 
   return (
     <div className="space-y-8">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold text-slate-900">Relatórios</h1>
-          <p className="text-sm text-slate-500">Relatórios prontos ou monte o seu no construtor de relatórios.</p>
+      <div className="page-header">
+        <div className="min-w-0">
+          <h1 className="page-title">Relatórios</h1>
+          <p className="page-subtitle">Relatórios prontos ou monte o seu no construtor de relatórios.</p>
         </div>
         <Link
           href="/relatorios/novo"
-          className="inline-flex items-center gap-1.5 rounded-md bg-slate-900 px-3.5 py-2 text-sm font-medium text-white hover:bg-slate-800"
+          className="btn btn-primary"
         >
           <Plus size={14} /> Novo relatório
         </Link>
@@ -92,8 +92,8 @@ export default async function ReportsPage() {
 
       {rows.length > 0 && (
         <section>
-          <h2 className="mb-2 text-sm font-semibold text-slate-900">Relatórios salvos</h2>
-          <div className="divide-y divide-slate-100 rounded-md border border-slate-200 bg-white">
+          <h2 className="card-title mb-2.5">Relatórios salvos</h2>
+          <div className="card divide-y divide-[rgba(15,23,42,.08)] overflow-hidden">
             {rows.map((preset) => {
               const params = new URLSearchParams({ base: preset.base, ...preset.filters as Record<string, string> });
               if (preset.columns?.length) params.set("cols", preset.columns.join(","));
@@ -102,19 +102,19 @@ export default async function ReportsPage() {
                 params.set("dir", preset.order_by.direction);
               }
               return (
-                <div key={preset.id} className="flex items-center justify-between px-4 py-2.5">
+                <div key={preset.id} className="flex items-center justify-between px-4 py-3 transition-colors hover:bg-[#F8FAFC]">
                   <div>
-                    <p className="text-sm font-medium text-slate-800">{preset.name}</p>
-                    <p className="text-xs text-slate-400">
+                    <p className="text-[13.5px] font-medium text-[#141d28]">{preset.name}</p>
+                    <p className="text-xs text-slate-500">
                       {preset.base === "companies" ? "Empresas" : "Certificados"}
                     </p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Link href={`/relatorios/novo?${params.toString()}`} className="text-xs font-medium text-slate-600 hover:text-slate-900">
+                    <Link href={`/relatorios/novo?${params.toString()}`} className="link text-xs">
                       Abrir
                     </Link>
                     <form action={deleteReportPreset.bind(null, preset.id)}>
-                      <button type="submit" className="text-slate-400 hover:text-red-600" title="Excluir">
+                      <button type="submit" className="icon-btn !h-7 !w-7 hover:!text-[#b03a3a]" title="Excluir" aria-label="Excluir">
                         <Trash2 size={14} />
                       </button>
                     </form>
@@ -128,15 +128,16 @@ export default async function ReportsPage() {
 
       {PREBUILT_GROUPS.map((group) => (
         <section key={group.title}>
-          <h2 className="mb-2 text-sm font-semibold text-slate-900">{group.title}</h2>
+          <h2 className="card-title mb-2.5">{group.title}</h2>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
             {group.reports.map((report) => (
               <Link
                 key={report.label}
                 href={report.href}
-                className="rounded-md border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 hover:border-slate-400 hover:bg-slate-50"
+                className="card card-link group flex items-center justify-between gap-2 px-4 py-3 text-[13px] font-medium text-slate-700"
               >
                 {report.label}
+                <span aria-hidden="true" className="text-slate-300 transition-[transform,color] group-hover:translate-x-0.5 group-hover:text-[#d95a08]">→</span>
               </Link>
             ))}
           </div>

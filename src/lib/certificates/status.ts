@@ -64,9 +64,9 @@ export const CERTIFICATE_STATUS_LABELS: Record<CertificateStatus, string> = {
 };
 
 export const CERTIFICATE_STATUS_BADGE_CLASSES: Record<CertificateStatus, string> = {
-  EM_DIA: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",
-  VENCENDO: "bg-amber-50 text-amber-700 ring-amber-600/20",
-  VENCE_HOJE: "bg-orange-50 text-orange-700 ring-orange-600/20",
-  VENCIDO: "bg-red-50 text-red-700 ring-red-600/20",
-  ARQUIVADO: "bg-gray-100 text-gray-600 ring-gray-500/20",
+  EM_DIA: "pill-ok",
+  VENCENDO: "pill-warn",
+  VENCE_HOJE: "pill-accent",
+  VENCIDO: "pill-danger",
+  ARQUIVADO: "pill-neutral",
 };

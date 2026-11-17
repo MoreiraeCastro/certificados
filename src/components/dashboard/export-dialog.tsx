@@ -95,11 +95,11 @@ export function ExportDialog({ defaultVisibleColumns }: { defaultVisibleColumns:
       </Button>
 
       {open && (
-        <div className="fixed inset-0 z-30 flex items-center justify-center bg-slate-900/40 p-4">
-          <div className="w-full max-w-md rounded-lg bg-white p-5 shadow-xl">
+        <div className="fixed inset-0 z-30 flex items-center justify-center bg-[rgba(10,16,24,.42)] backdrop-blur-[2px] p-4">
+          <div className="card w-full max-w-md p-5 shadow-xl">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-slate-900">Exportar certificados</h2>
-              <button onClick={() => setOpen(false)} className="text-slate-400 hover:text-slate-700">
+              <h2 className="card-title">Exportar certificados</h2>
+              <button onClick={() => setOpen(false)} aria-label="Fechar" className="icon-btn !h-7 !w-7">
                 <X size={16} />
               </button>
             </div>
@@ -143,7 +143,7 @@ export function ExportDialog({ defaultVisibleColumns }: { defaultVisibleColumns:
                   </button>
                 </div>
               </div>
-              <div className="max-h-48 overflow-y-auto rounded border border-slate-200 p-2">
+              <div className="max-h-48 overflow-y-auto rounded-md border border-line p-2">
                 {EXPORTABLE_CERTIFICATE_COLUMNS.map((col) => (
                   <label key={col.key} className="flex items-center gap-2 py-1 text-xs text-slate-700">
                     <input

@@ -83,33 +83,34 @@ export function FiltersBar() {
   }
 
   return (
-    <div className="rounded-md border border-slate-200 bg-white">
+    <div className="card">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-slate-700"
+        aria-expanded={open}
+        className="flex w-full items-center justify-between rounded-[10px] px-4 py-2.5 text-[13px] font-medium text-slate-700 transition-colors hover:bg-[#F8FAFC]"
       >
         <span className="flex items-center gap-2">
-          <Filter size={14} />
+          <Filter size={14} className="text-slate-400" />
           Filtros
           {activeFilterCount > 0 && (
-            <span className="rounded-full bg-slate-900 px-1.5 py-0.5 text-xs text-white">
+            <span className="count-pill">
               {activeFilterCount}
             </span>
           )}
         </span>
-        <span className="text-xs text-slate-400">{open ? "Ocultar" : "Mostrar"}</span>
+        <span className="text-xs text-slate-500">{open ? "Ocultar" : "Mostrar"}</span>
       </button>
 
       {open && (
-        <div className="border-t border-slate-100 p-4">
+        <div className="border-t border-line p-4">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             <div className="col-span-2 sm:col-span-1">
-              <label className="mb-1 block text-xs font-medium text-slate-700">Empresa, código ou CNPJ/CPF</label>
+              <label className="field-label">Empresa, código ou CNPJ/CPF</label>
               <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar..." />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Status</label>
+              <label className="field-label">Status</label>
               <Select value={status} onChange={(e) => setStatus(e.target.value)}>
                 {STATUS_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -119,7 +120,7 @@ export function FiltersBar() {
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Tipo</label>
+              <label className="field-label">Tipo</label>
               <Select value={type} onChange={(e) => setType(e.target.value)}>
                 <option value="">Todos</option>
                 <option value="e-cnpj">e-CNPJ</option>
@@ -127,7 +128,7 @@ export function FiltersBar() {
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Modelo</label>
+              <label className="field-label">Modelo</label>
               <Select value={model} onChange={(e) => setModel(e.target.value)}>
                 <option value="">Todos</option>
                 <option value="A1">A1</option>
@@ -135,19 +136,19 @@ export function FiltersBar() {
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Município</label>
+              <label className="field-label">Município</label>
               <Input value={municipality} onChange={(e) => setMunicipality(e.target.value)} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">UF</label>
+              <label className="field-label">UF</label>
               <Input value={uf} maxLength={2} onChange={(e) => setUf(e.target.value.toUpperCase())} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Responsável</label>
+              <label className="field-label">Responsável</label>
               <Input value={responsible} onChange={(e) => setResponsible(e.target.value)} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Vencimento</label>
+              <label className="field-label">Vencimento</label>
               <Select value={due} onChange={(e) => handleDueQuickFilter(e.target.value)}>
                 <option value="">Qualquer período</option>
                 {Object.entries(DUE_QUICK_FILTER_LABELS).map(([value, label]) => (
@@ -160,11 +161,11 @@ export function FiltersBar() {
             {due === "custom" && (
               <>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-700">De</label>
+                  <label className="field-label">De</label>
                   <Input type="date" value={dueFrom} onChange={(e) => setDueFrom(e.target.value)} />
                 </div>
                 <div>
-                  <label className="mb-1 block text-xs font-medium text-slate-700">Até</label>
+                  <label className="field-label">Até</label>
                   <Input type="date" value={dueTo} onChange={(e) => setDueTo(e.target.value)} />
                 </div>
               </>

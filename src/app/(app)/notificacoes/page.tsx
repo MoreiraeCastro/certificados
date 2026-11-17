@@ -13,8 +13,8 @@ export default async function NotificationsPage() {
   return (
     <div className="max-w-2xl space-y-4">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Notificações</h1>
-        <p className="text-sm text-slate-500">
+        <h1 className="page-title">Notificações</h1>
+        <p className="page-subtitle">
           Certificados/alvarás vencendo e arquivos exportados prontos para baixar de novo. Ficam aqui até serem
           marcados como lidos.
         </p>

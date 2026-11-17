@@ -19,41 +19,41 @@ export default async function UsersPage() {
   return (
     <div className="max-w-5xl space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Usuários</h1>
-        <p className="text-sm text-slate-500">Gerencie quem tem acesso ao sistema.</p>
+        <h1 className="page-title">Usuários</h1>
+        <p className="page-subtitle">Gerencie quem tem acesso ao sistema.</p>
       </div>
 
-      <div className="rounded-md border border-slate-200 bg-white p-5">
-        <h2 className="mb-3 text-sm font-semibold text-slate-900">Novo usuário</h2>
+      <div className="card p-5">
+        <h2 className="card-title mb-3">Novo usuário</h2>
         <NewUserForm />
       </div>
 
-      <div className="overflow-x-auto rounded-md border border-slate-200 bg-white">
-        <table className="w-full text-left text-sm">
+      <div className="table-wrap">
+        <table className="data-table">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50 text-xs font-medium uppercase tracking-wide text-slate-500">
-              <th className="px-4 py-2.5">Nome</th>
-              <th className="px-4 py-2.5">E-mail</th>
-              <th className="px-4 py-2.5">Status</th>
-              <th className="px-4 py-2.5">Perfil / Grupo / Ações</th>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Status</th>
+              <th>Perfil / Grupo / Ações</th>
             </tr>
           </thead>
           <tbody>
             {((profiles ?? []) as Profile[]).map((profile) => (
               <tr key={profile.id} className="border-b border-slate-100 last:border-0">
-                <td className="px-4 py-2.5 font-medium text-slate-900">
+                <td className="cell-strong">
                   {profile.full_name}
                   {profile.id === currentUser.id && <span className="ml-1 text-xs text-slate-400">(você)</span>}
                 </td>
-                <td className="px-4 py-2.5 text-slate-700">{profile.email}</td>
-                <td className="px-4 py-2.5">
+                <td>{profile.email}</td>
+                <td>
                   {profile.active ? (
                     <span className="text-emerald-700">Ativo</span>
                   ) : (
                     <span className="text-slate-400">Inativo</span>
                   )}
                 </td>
-                <td className="px-4 py-2.5">
+                <td>
                   <UserRowActions
                     profileId={profile.id}
                     role={profile.role}

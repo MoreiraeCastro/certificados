@@ -24,14 +24,17 @@ export function ModuleCards({ cards }: { cards: ModuleCardDef[] }) {
           <Link
             key={card.key}
             href={card.href}
-            className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-5 py-4 shadow-sm transition-colors hover:border-slate-400"
+            className="card card-link group flex items-center justify-between gap-3 px-5 py-4"
           >
             <span>
-              <span className="block text-xs font-medium uppercase tracking-wide text-slate-500">{card.label}</span>
-              <span className="mt-1 block text-3xl font-bold text-slate-900">{card.value.toLocaleString("pt-BR")}</span>
+              <span className="block text-xs font-medium text-[#6d7885]">{card.label}</span>
+              <span className="kpi-value block">{card.value.toLocaleString("pt-BR")}</span>
+              <span className="mt-1 inline-flex items-center gap-1 text-xs font-medium text-[#b94700] opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                Abrir <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">→</span>
+              </span>
             </span>
-            <span className={cn("flex h-12 w-12 shrink-0 items-center justify-center rounded-xl", card.colorClasses)}>
-              <Icon size={22} strokeWidth={2} />
+            <span className={cn("flex h-9 w-9 shrink-0 items-center justify-center self-start rounded-md", card.colorClasses)}>
+              <Icon size={18} strokeWidth={1.7} />
             </span>
           </Link>
         );

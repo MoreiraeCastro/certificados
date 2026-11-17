@@ -82,9 +82,14 @@ export function AlvarasCreateFlow({ types }: { types: AlvaraType[] }) {
       </Button>
 
       {dragging && (
-        <div className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-3 bg-slate-900/70 text-white">
-          <UploadCloud size={40} />
-          <p className="text-lg font-medium">Solte o arquivo para criar um novo alvará</p>
+        <div className="fixed inset-0 z-40 grid place-items-center bg-[rgba(10,16,24,.42)] p-8 backdrop-blur-[2px]">
+          <div className="dropzone is-dragging w-full max-w-md !cursor-copy !py-12 shadow-xl">
+            <span className="dropzone-icon !text-[#d95a08]">
+              <UploadCloud size={20} strokeWidth={1.7} />
+            </span>
+            <p className="dropzone-title mt-1">Solte o arquivo para criar um novo alvará</p>
+            <p className="dropzone-hint">PDF, JPG, PNG ou WEBP</p>
+          </div>
         </div>
       )}
 

@@ -1,3 +1,5 @@
+import { Building2 } from "@/components/icons";
+import { EmptyState } from "@/components/ui/empty-state";
 import Link from "next/link";
 import { ClickableRow } from "@/components/ui/clickable-row";
 import { createClient } from "@/lib/supabase/server";
@@ -30,29 +32,29 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Pr
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold text-slate-900">Clientes</h1>
-          <p className="text-sm text-slate-500">Cadastro dos clientes do escritório.</p>
+      <div className="page-header">
+        <div className="min-w-0">
+          <h1 className="page-title">Clientes</h1>
+          <p className="page-subtitle">Cadastro dos clientes do escritório.</p>
         </div>
         <NewCompanyModal defaultWarningDays={thresholds.warning_days} users={users ?? []} />
       </div>
 
-      <form className="flex flex-wrap items-end gap-3 rounded-md border border-slate-200 bg-white p-4" method="get">
+      <form className="flex flex-wrap items-end gap-3 card p-4" method="get">
         <div className="min-w-[220px] flex-1">
-          <label className="mb-1 block text-xs font-medium text-slate-700">Nome, código ou CNPJ/CPF</label>
+          <label className="field-label">Nome, código ou CNPJ/CPF</label>
           <Input name="q" defaultValue={filters.q ?? ""} placeholder="Buscar..." />
         </div>
         <div className="w-40">
-          <label className="mb-1 block text-xs font-medium text-slate-700">Município</label>
+          <label className="field-label">Município</label>
           <Input name="municipality" defaultValue={filters.municipality ?? ""} />
         </div>
         <div className="w-24">
-          <label className="mb-1 block text-xs font-medium text-slate-700">UF</label>
+          <label className="field-label">UF</label>
           <Input name="uf" maxLength={2} defaultValue={filters.uf ?? ""} />
         </div>
         <div className="w-36">
-          <label className="mb-1 block text-xs font-medium text-slate-700">Situação</label>
+          <label className="field-label">Situação</label>
           <Select name="active" defaultValue={filters.active === undefined ? "" : String(filters.active)}>
             <option value="">Todas</option>
             <option value="true">Ativas</option>
@@ -61,54 +63,54 @@ export default async function CompaniesPage({ searchParams }: { searchParams: Pr
         </div>
         <button
           type="submit"
-          className="rounded-md bg-slate-900 px-3.5 py-1.5 text-sm font-medium text-white hover:bg-slate-800"
+          className="btn btn-primary"
         >
           Filtrar
         </button>
       </form>
 
-      <div className="overflow-x-auto rounded-md border border-slate-200 bg-white">
-        <table className="w-full min-w-max text-left text-sm">
+      <div className="table-wrap">
+        <table className="data-table min-w-max">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50 text-xs font-medium uppercase tracking-wide text-slate-500">
-              <th className="px-4 py-2.5">Código</th>
-              <th className="px-4 py-2.5">CNPJ/CPF</th>
-              <th className="px-4 py-2.5">Razão social</th>
-              <th className="px-4 py-2.5">Município</th>
-              <th className="px-4 py-2.5">UF</th>
-              <th className="px-4 py-2.5">Situação</th>
+            <tr>
+              <th>Código</th>
+              <th>CNPJ/CPF</th>
+              <th>Razão social</th>
+              <th>Município</th>
+              <th>UF</th>
+              <th>Situação</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((company) => (
-              <ClickableRow key={company.id} href={`/clientes/${company.id}`} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
-                <td className="px-4 py-2.5 font-medium text-slate-900">
+              <ClickableRow key={company.id} href={`/clientes/${company.id}`}>
+                <td className="cell-strong">
                   <Link href={`/clientes/${company.id}`} className="hover:underline">
                     {company.code}
                   </Link>
                 </td>
-                <td className="px-4 py-2.5 text-slate-700">{formatDocument(company.document)}</td>
-                <td className="px-4 py-2.5 text-slate-700">
+                <td>{formatDocument(company.document)}</td>
+                <td>
                   <Link href={`/clientes/${company.id}`} className="hover:underline">
                     {company.corporate_name}
                   </Link>
                   {company.short_name && <span className="ml-1 text-xs text-slate-500">({company.short_name})</span>}
                 </td>
-                <td className="px-4 py-2.5 text-slate-700">{company.municipality ?? "-"}</td>
-                <td className="px-4 py-2.5 text-slate-700">{company.uf ?? "-"}</td>
-                <td className="px-4 py-2.5 text-slate-700">
+                <td>{company.municipality ?? "-"}</td>
+                <td>{company.uf ?? "-"}</td>
+                <td>
                   {company.active ? (
-                    <span className="text-emerald-700">Ativa</span>
+                    <span className="pill pill-ok">Ativa</span>
                   ) : (
-                    <span className="text-slate-400">Inativa</span>
+                    <span className="pill pill-neutral">Inativa</span>
                   )}
                 </td>
               </ClickableRow>
             ))}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-12 text-center text-sm text-slate-500">
-                  Nenhum cliente encontrado.
+                <td colSpan={6} className="!p-0">
+                  <EmptyState icon={Building2} title="Nenhum cliente encontrado" description="Ajuste os filtros ou cadastre um novo cliente." />
                 </td>
               </tr>
             )}

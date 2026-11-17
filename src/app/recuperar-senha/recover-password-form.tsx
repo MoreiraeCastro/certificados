@@ -14,10 +14,10 @@ export function RecoverPasswordForm() {
   if (state.success) {
     return (
       <div className="space-y-4">
-        <p className="rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700 ring-1 ring-inset ring-emerald-200">
+        <p className="alert alert-ok">
           Se esse e-mail estiver cadastrado, você vai receber um link para redefinir a senha em poucos minutos.
         </p>
-        <Link href="/login" className="text-sm text-slate-600 underline">
+        <Link href="/login" className="btn btn-secondary">
           Voltar para o login
         </Link>
       </div>

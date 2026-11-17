@@ -46,10 +46,10 @@ export default async function AlvarasPage({ searchParams }: { searchParams: Prom
 
   return (
     <div className="space-y-5">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h1 className="text-xl font-semibold text-slate-900">Alvarás</h1>
-          <p className="text-sm text-slate-500">Controle de validade de alvarás e licenças municipais.</p>
+      <div className="page-header">
+        <div className="min-w-0">
+          <h1 className="page-title">Alvarás</h1>
+          <p className="page-subtitle">Controle de validade de alvarás e licenças municipais.</p>
         </div>
         <AlvarasCreateFlow types={types} />
       </div>

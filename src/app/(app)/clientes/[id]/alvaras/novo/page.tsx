@@ -21,10 +21,10 @@ export default async function NewAlvaraPage({ params }: { params: Promise<{ id: 
   return (
     <div className="max-w-2xl space-y-4">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Novo alvará</h1>
-        <p className="text-sm text-slate-500">{company.corporate_name}</p>
+        <h1 className="page-title">Novo alvará</h1>
+        <p className="page-subtitle">{company.corporate_name}</p>
       </div>
-      <div className="rounded-md border border-slate-200 bg-white p-6">
+      <div className="card p-6">
         <AlvaraForm action={boundAction} types={types} companyId={id} />
       </div>
     </div>

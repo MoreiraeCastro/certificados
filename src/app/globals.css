@@ -1,17 +1,751 @@
 @import "tailwindcss";
 
+/*
+ * Camada visual alinhada ao DESIGN.md do portal (portal-hub/DESIGN.md é a fonte da verdade).
+ * Tokens do portal em :root; o tema do Tailwind é ajustado para que as classes já usadas nas telas
+ * (border-slate-200, hover:bg-slate-100, rounded-lg, shadow-sm...) herdem o visual novo sem reescrever cada página.
+ */
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --canvas: #f5f6f8;
+  --card: #ffffff;
+  --surface-sunken: #f7f9fb;
+  --table-head: #f8fafc;
+  --line: rgba(15, 23, 42, 0.08);
+  --line-strong: rgba(15, 23, 42, 0.14);
+  --line-dashed: rgba(15, 23, 42, 0.18);
+  --ink-strong: #141d28;
+  --ink: #37414e;
+  --muted: #6d7885;
+  --text-2: #64748b;
+  --primary: #0f172a;
+  --primary-hover: #1e293b;
+  --track: #f1f5f9;
+  --accent: #d95a08;
+  --accent-dark: #b94700;
+  --accent-soft: #fdf1e8;
+  --accent-ring: rgba(217, 90, 8, 0.15);
+  --warn: #97600a;
+  --warn-soft: #fdf4e5;
+  --danger: #b03a3a;
+  --danger-soft: #fbecec;
+  --ok: #1b7a51;
+  --ok-soft: #e8f5ef;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --shadow-hover: 0 1px 2px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.06);
+
+  /* nomes antigos, mantidos para compatibilidade */
+  --background: var(--canvas);
+  --foreground: var(--ink-strong);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+@theme {
+  /* Tokens do portal como utilitários (bg-canvas, border-line, text-accent...). */
+  --color-canvas: #f5f6f8;
+  --color-line: rgba(15, 23, 42, 0.08);
+  --color-line-strong: rgba(15, 23, 42, 0.14);
+  --color-text-2: #64748b;
+  --color-accent: #d95a08;
+  --color-accent-dark: #b94700;
+  --color-accent-soft: #fdf1e8;
+
+  /* Linhas translúcidas no lugar do cinza duro (slate-100/200 só aparecem como borda, divisória e hover). */
+  --color-slate-100: rgba(15, 23, 42, 0.05);
+  --color-slate-200: rgba(15, 23, 42, 0.08);
+
+  /* Cores de estado do portal no lugar das saturadas do Tailwind (textos de erro/sucesso/atenção soltos nas telas). */
+  --color-red-600: #b03a3a;
+  --color-red-700: #9a3030;
+  --color-emerald-700: #1b7a51;
+  --color-amber-700: #97600a;
+
+  /* Raios: 6px (campos, pílulas), 10px (cartões e painéis). */
+  --radius-lg: 10px;
+  --radius-xl: 10px;
+
+  /* Elevação: cartões planos; só janelas e menus flutuam. */
+  --shadow-sm: 0 0 #0000;
+  --shadow-lg: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.1);
+  --shadow-xl: 0 2px 4px rgba(15, 23, 42, 0.04), 0 16px 48px rgba(15, 23, 42, 0.16);
+}
+
+@layer base {
+  html {
+    background: var(--canvas);
+  }
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.011em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+  }
+  /* Checkbox e rádio na cor da marca. */
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: var(--accent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---------------------------------------------------------------- cabeçalho de página */
+  .page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px 16px;
+  }
+  .page-title {
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--ink-strong);
+    letter-spacing: -0.015em;
+  }
+  .page-subtitle {
+    margin-top: 2px;
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ---------------------------------------------------------------- superfícies */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-strong);
+  }
+  .eyebrow {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ---------------------------------------------------------------- tabelas */
+  .table-wrap {
+    overflow-x: auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+  .data-table {
+    width: 100%;
+    text-align: left;
+    font-size: 13px;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+    border-collapse: collapse;
+  }
+  .data-table thead th {
+    padding: 9px 16px;
+    background: var(--table-head);
+    border-bottom: 1px solid var(--line);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+    text-align: left;
+  }
+  .data-table tbody td {
+    padding: 12px 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--line);
+  }
+  .data-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .data-table tbody tr {
+    transition: background-color 0.12s ease;
+  }
+  .data-table tbody tr:hover {
+    background: var(--table-head);
+  }
+  .data-table.is-compact thead th {
+    padding: 7px 12px;
+  }
+  .data-table.is-compact tbody td {
+    padding: 7px 12px;
+  }
+  .data-table .num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .data-table .col-actions {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .data-table .col-actions > * {
+    margin-left: auto;
+  }
+  .cell-strong {
+    font-weight: 500;
+    color: var(--ink-strong);
+  }
+  .cell-sub {
+    font-size: 12px;
+    color: var(--text-2);
+  }
+
+  /* ---------------------------------------------------------------- status em pílula */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    height: 22px;
+    padding: 0 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .pill::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.85;
+  }
+  .pill-ok {
+    background: var(--ok-soft);
+    color: var(--ok);
+  }
+  .pill-warn {
+    background: var(--warn-soft);
+    color: var(--warn);
+  }
+  .pill-accent {
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+  }
+  .pill-danger {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+  .pill-neutral {
+    background: var(--track);
+    color: var(--text-2);
+  }
+  .pill-info {
+    background: #eef2ff;
+    color: #4338ca;
+  }
+  .pill-sky {
+    background: #f0f9ff;
+    color: #0369a1;
+  }
+  .pill-teal {
+    background: #f0fdfa;
+    color: #0f766e;
+  }
+
+  /* ---------------------------------------------------------------- campos */
+  .field {
+    display: block;
+    width: 100%;
+    height: 38px;
+    padding: 0 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-sm);
+    background: var(--card);
+    font-size: 13.5px;
+    color: var(--ink-strong);
+    transition: border-color 0.12s ease, box-shadow 0.12s ease;
+  }
+  .field::placeholder {
+    color: #94a3b8;
+  }
+  .field:hover:not(:disabled):not(:focus) {
+    border-color: rgba(15, 23, 42, 0.22);
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-ring);
+  }
+  .field:disabled {
+    background: var(--surface-sunken);
+    color: var(--muted);
+    cursor: not-allowed;
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--danger);
+  }
+  textarea.field {
+    height: auto;
+    min-height: 76px;
+    padding: 8px 12px;
+    line-height: 1.5;
+  }
+  select.field {
+    padding-right: 32px;
+  }
+  .field-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ---------------------------------------------------------------- dropzone */
+  .dropzone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 28px 20px;
+    text-align: center;
+    border: 1.5px dashed var(--line-dashed);
+    border-radius: var(--r-md);
+    background: var(--table-head);
+    color: var(--text-2);
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.14s ease, background-color 0.14s ease;
+  }
+  .dropzone:hover,
+  .dropzone:focus-within {
+    border-color: rgba(15, 23, 42, 0.3);
+  }
+  .dropzone.is-dragging,
+  .dropzone[data-dragging="true"] {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .dropzone-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--r-sm);
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--muted);
+  }
+  .dropzone-title {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink-strong);
+  }
+  .dropzone-hint {
+    font-size: 12px;
+    color: var(--text-2);
+  }
+
+  /* ---------------------------------------------------------------- estado vazio */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 48px 24px;
+    text-align: center;
+  }
+  .empty-state-icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
+    border-radius: var(--r-sm);
+    background: var(--surface-sunken);
+    box-shadow: inset 0 0 0 1px var(--line);
+    color: var(--muted);
+  }
+  .empty-state-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-strong);
+  }
+  .empty-state-text {
+    max-width: 420px;
+    font-size: 13px;
+    color: var(--text-2);
+  }
+  .empty-state-action {
+    margin-top: 12px;
+  }
+
+  /* ---------------------------------------------------------------- links */
+  .link {
+    color: var(--accent-dark);
+    font-weight: 500;
+    text-underline-offset: 2px;
+  }
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  /* ---------------------------------------------------------------- cartão-link */
+  .card-link {
+    transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+  }
+  .card-link:hover {
+    transform: translateY(-1px);
+    border-color: var(--line-strong);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* ---------------------------------------------------------------- spinner discreto */
+  .spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    border: 2px solid var(--line-strong);
+    border-top-color: var(--accent);
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------------------------------------------------------- painel de métricas (DESIGN.md §5 .kpis)
+   Um cartão só, células divididas por linhas verticais de 1px; o filtro ativo ganha fundo suave e um traço de 2px. */
+@layer components {
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+  }
+  .kpi {
+    position: relative;
+    display: block;
+    padding: 16px 20px;
+    box-shadow: -1px 0 0 var(--line), 0 -1px 0 var(--line);
+    transition: background-color 0.14s ease;
+  }
+  .kpi:hover {
+    background: var(--table-head);
+  }
+  .kpi::after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    height: 2px;
+    border-radius: 2px 2px 0 0;
+    background: transparent;
+  }
+  .kpi.is-active {
+    background: var(--table-head);
+  }
+  .kpi-label {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+  }
+  .kpi-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    flex: none;
+  }
+  .kpi-value {
+    margin-top: 6px;
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-strong);
+  }
+}
+
+/* ---------------------------------------------------------------- controles segmentados (Mês/Semana, Lista/Calendário, abas)
+   Trilho cinza claro; a opção atual é uma "pastilha" branca, nunca um bloco escuro cheio. */
+@layer components {
+  .seg {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px;
+    border-radius: var(--r-sm);
+    background: var(--track);
+    box-shadow: inset 0 0 0 1px var(--line);
+    font-size: 12px;
+  }
+  .seg-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 5px;
+    font-weight: 500;
+    color: var(--text-2);
+    white-space: nowrap;
+    transition: background-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
+  }
+  .seg-item:hover {
+    color: var(--ink-strong);
+  }
+  .seg-item[aria-pressed="true"],
+  .seg-item[aria-selected="true"],
+  .seg-item.is-on {
+    background: var(--card);
+    color: var(--ink-strong);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08), 0 0 0 1px var(--line);
+  }
+  .seg-item:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* contador em pílula (filtros ativos, não lidas) */
+  .count-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* botão-ícone discreto (setas do calendário, fechar) */
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--r-sm);
+    color: var(--text-2);
+    transition: background-color 0.12s ease, color 0.12s ease;
+  }
+  .icon-btn:hover {
+    background: rgba(15, 23, 42, 0.05);
+    color: var(--ink-strong);
+  }
+}
+
+/* ---------------------------------------------------------------- botões (DESIGN.md §6)
+   Primário azul-marinho com texto branco; secundário com borda translúcida e fundo branco; 36px (30px no compacto). */
+@layer components {
+  .btn {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: var(--r-sm);
+    border: 1px solid transparent;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease;
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+  .btn-sm {
+    height: 30px;
+    padding: 0 10px;
+    font-size: 12px;
+  }
+  .btn-primary {
+    background: var(--primary);
+    color: #fff;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: var(--primary-hover);
+  }
+  .btn-primary:disabled {
+    background: rgba(15, 23, 42, 0.38);
+  }
+  .btn-secondary {
+    background: var(--card);
+    border-color: rgba(15, 23, 42, 0.1);
+    color: var(--ink);
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: var(--table-head);
+    border-color: var(--line-strong);
+    color: var(--ink-strong);
+  }
+  .btn-secondary:disabled {
+    color: #94a3b8;
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-2);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: rgba(15, 23, 42, 0.05);
+    color: var(--ink-strong);
+  }
+  .btn-ghost:disabled {
+    color: #cbd5e1;
+  }
+  .btn-danger {
+    background: var(--danger);
+    color: #fff;
+  }
+  .btn-danger:hover:not(:disabled) {
+    background: #9a3030;
+  }
+  .btn-danger:disabled {
+    background: rgba(176, 58, 58, 0.4);
+  }
+}
+
+/* ---------------------------------------------------------------- dropzone em linha (anexo .pfx / anexo do alvará) e avisos */
+@layer components {
+  .dropzone-inline {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    text-align: left;
+    cursor: default;
+  }
+  .file-input {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    color: var(--text-2);
+    cursor: pointer;
+  }
+  .file-input::file-selector-button {
+    height: 30px;
+    margin-right: 10px;
+    padding: 0 10px;
+    border: 1px solid rgba(15, 23, 42, 0.1);
+    border-radius: var(--r-sm);
+    background: var(--card);
+    color: var(--ink);
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+  }
+  .file-input:hover::file-selector-button {
+    background: var(--table-head);
+    border-color: var(--line-strong);
+  }
+  .file-input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: var(--r-sm);
+  }
+
+  .alert {
+    padding: 9px 12px;
+    border-radius: var(--r-sm);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .alert-danger {
+    background: var(--danger-soft);
+    color: var(--danger);
+    box-shadow: inset 0 0 0 1px rgba(176, 58, 58, 0.16);
+  }
+  .alert-warn {
+    background: var(--warn-soft);
+    color: var(--warn);
+    box-shadow: inset 0 0 0 1px rgba(151, 96, 10, 0.16);
+  }
+  .alert-ok {
+    background: var(--ok-soft);
+    color: var(--ok);
+    box-shadow: inset 0 0 0 1px rgba(27, 122, 81, 0.16);
+  }
+
+  /* linha de tabela que só carrega o estado vazio não reage ao hover */
+  .data-table tbody tr:has(> td[colspan]):hover {
+    background: transparent;
+  }
+}
+
+/* ---------------------------------------------------------------- pares rótulo/valor (ficha do cliente) */
+@layer components {
+  .meta-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .meta-value {
+    margin-top: 3px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--ink-strong);
+    font-variant-numeric: tabular-nums;
+  }
+  .data-table .col-actions > div {
+    justify-content: flex-end;
+  }
 }

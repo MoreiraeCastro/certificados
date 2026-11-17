@@ -15,8 +15,8 @@ export default async function GroupsPage() {
   return (
     <div className="max-w-2xl space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Grupos de usuários</h1>
-        <p className="text-sm text-slate-500">
+        <h1 className="page-title">Grupos de usuários</h1>
+        <p className="page-subtitle">
           Defina grupos e atribua usuários a eles em <span className="font-medium">Usuários</span>.
         </p>
       </div>

@@ -1,5 +1,6 @@
+import { EmptyState } from "@/components/ui/empty-state";
 import Link from "next/link";
-import { Download } from "@/components/icons";
+import { Download, FileBarChart } from "@/components/icons";
 import type { ExportColumn } from "@/lib/export/xlsx";
 import type { ExportCell } from "@/lib/certificates/export-value";
 import type { AuxiliaryReportKind } from "@/lib/reports/auxiliary";
@@ -30,21 +31,21 @@ export function AuxiliaryTable({
 }) {
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold text-slate-900">{title}</h1>
-          <p className="text-sm text-slate-500">{description}</p>
+      <div className="page-header">
+        <div className="min-w-0">
+          <h1 className="page-title">{title}</h1>
+          <p className="page-subtitle">{description}</p>
         </div>
         <div className="flex items-center gap-2">
           <Link
             href={`/api/reports/export-auxiliary?kind=${kind}&format=xlsx`}
-            className="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-300 hover:bg-slate-50"
+            className="btn btn-secondary"
           >
             <Download size={14} /> Excel
           </Link>
           <Link
             href={`/api/reports/export-auxiliary?kind=${kind}&format=csv`}
-            className="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-1.5 text-sm font-medium text-slate-700 ring-1 ring-inset ring-slate-300 hover:bg-slate-50"
+            className="btn btn-secondary"
           >
             <Download size={14} /> CSV
           </Link>
@@ -53,12 +54,12 @@ export function AuxiliaryTable({
 
       <p className="text-xs text-slate-500">{rows.length.toLocaleString("pt-BR")} registro(s)</p>
 
-      <div className="overflow-x-auto rounded-md border border-slate-200 bg-white">
-        <table className="w-full min-w-max text-left text-sm">
+      <div className="table-wrap">
+        <table className="data-table min-w-max">
           <thead>
-            <tr className="border-b border-slate-200 bg-slate-50 text-xs font-medium uppercase tracking-wide text-slate-500">
+            <tr>
               {columns.map((col) => (
-                <th key={col.key} className="whitespace-nowrap px-4 py-2.5">
+                <th key={col.key}>
                   {col.label}
                 </th>
               ))}
@@ -68,9 +69,9 @@ export function AuxiliaryTable({
             {rows.map((row, i) => {
               const cells = toCells(row);
               return (
-                <tr key={i} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+                <tr key={i}>
                   {cells.map((cell, j) => (
-                    <td key={j} className="whitespace-nowrap px-4 py-2.5 text-slate-700">
+                    <td key={j} className="whitespace-nowrap">
                       {formatCell(cell)}
                     </td>
                   ))}
@@ -79,8 +80,8 @@ export function AuxiliaryTable({
             })}
             {rows.length === 0 && (
               <tr>
-                <td colSpan={columns.length} className="px-4 py-12 text-center text-sm text-slate-500">
-                  Nenhum registro encontrado.
+                <td colSpan={columns.length} className="!p-0">
+                  <EmptyState icon={FileBarChart} title="Nenhum registro encontrado" description="Não há dados para este relatório no momento." />
                 </td>
               </tr>
             )}

@@ -24,14 +24,14 @@ export function AlvaraRowActions({
       <Link
         href={`/clientes/${companyId}`}
         title="Ver empresa"
-        className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+        className="icon-btn !h-7 !w-7"
       >
         <Eye size={14} />
       </Link>
       <Link
         href={`/clientes/${companyId}/alvaras/${alvaraId}/editar`}
         title="Editar"
-        className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+        className="icon-btn !h-7 !w-7"
       >
         <Pencil size={14} />
       </Link>
@@ -41,7 +41,7 @@ export function AlvaraRowActions({
           title="Restaurar"
           disabled={isPending}
           onClick={() => startTransition(() => restoreAlvara(alvaraId, companyId))}
-          className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-emerald-700"
+          className="icon-btn !h-7 !w-7 hover:!text-[#1b7a51]"
         >
           <ArchiveRestore size={14} />
         </button>
@@ -55,7 +55,7 @@ export function AlvaraRowActions({
               startTransition(() => archiveAlvara(alvaraId, companyId));
             }
           }}
-          className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-amber-700"
+          className="icon-btn !h-7 !w-7 hover:!text-[#97600a]"
         >
           <Archive size={14} />
         </button>
@@ -70,7 +70,7 @@ export function AlvaraRowActions({
               startTransition(() => deleteAlvara(alvaraId, companyId));
             }
           }}
-          className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-red-700"
+          className="icon-btn !h-7 !w-7 hover:!text-[#b03a3a]"
         >
           <Trash2 size={14} />
         </button>

@@ -1,8 +1,8 @@
 import { forwardRef, type InputHTMLAttributes, type SelectHTMLAttributes, type TextareaHTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
 
-const fieldClasses =
-  "block w-full rounded-md border-0 py-1.5 px-3 text-sm text-slate-900 ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-slate-900 disabled:bg-slate-50 disabled:text-slate-500";
+// Visual do campo (38px, borda suave, anel de foco laranja discreto) vive em globals.css (.field).
+const fieldClasses = "field";
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
   ({ className, ...props }, ref) => (
@@ -13,7 +13,7 @@ Input.displayName = "Input";
 
 export const Select = forwardRef<HTMLSelectElement, SelectHTMLAttributes<HTMLSelectElement>>(
   ({ className, ...props }, ref) => (
-    <select ref={ref} className={cn(fieldClasses, "bg-white", className)} {...props} />
+    <select ref={ref} className={cn(fieldClasses, className)} {...props} />
   )
 );
 Select.displayName = "Select";
@@ -27,14 +27,14 @@ Textarea.displayName = "Textarea";
 
 export function Label({ children, htmlFor, required }: { children: React.ReactNode; htmlFor?: string; required?: boolean }) {
   return (
-    <label htmlFor={htmlFor} className="mb-1 block text-xs font-medium text-slate-700">
+    <label htmlFor={htmlFor} className="field-label">
       {children}
-      {required && <span className="text-red-500"> *</span>}
+      {required && <span className="text-[var(--danger)]"> *</span>}
     </label>
   );
 }
 
 export function FieldError({ children }: { children?: string }) {
   if (!children) return null;
-  return <p className="mt-1 text-xs text-red-600">{children}</p>;
+  return <p className="mt-1 text-xs text-[var(--danger)]">{children}</p>;
 }

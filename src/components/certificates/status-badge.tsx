@@ -9,7 +9,7 @@ export function StatusBadge({ status }: { status: CertificateStatus }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset",
+        "pill",
         CERTIFICATE_STATUS_BADGE_CLASSES[status]
       )}
     >

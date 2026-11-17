@@ -9,6 +9,7 @@ import { listCombinedNotifications } from "@/lib/notifications/combined";
 import { ModuleCards, type ModuleCardDef } from "@/components/dashboard/module-cards";
 import { VencimentosCalendar } from "@/components/dashboard/vencimentos-calendar";
 import { DashboardNotificationsPanel } from "@/components/dashboard/dashboard-notifications-panel";
+import { PageHeader } from "@/components/ui/page-header";
 
 export const dynamic = "force-dynamic";
 
@@ -50,7 +51,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
       value: counts.active,
       icon: FileCheck2,
       href: "/painel-certificados",
-      colorClasses: "bg-blue-50 text-blue-600",
+      colorClasses: "bg-[#EEF2FF] text-[#4338CA] shadow-[inset_0_0_0_1px_rgba(67,56,202,.15)]",
     },
     {
       key: "alvaras",
@@ -58,7 +59,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
       value: alvaraCounts.active,
       icon: Stamp,
       href: "/alvaras",
-      colorClasses: "bg-amber-50 text-amber-600",
+      colorClasses: "bg-[#FFFBEB] text-[#B45309] shadow-[inset_0_0_0_1px_rgba(180,83,9,.15)]",
     },
   ];
 
@@ -66,10 +67,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<Sea
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-xl font-semibold text-slate-900">Dashboard</h1>
-        <p className="text-sm text-slate-500">Visão geral dos módulos e vencimentos, {user.profile.full_name}.</p>
-      </div>
+      <PageHeader title="Dashboard" subtitle={<>Visão geral dos módulos e vencimentos, {user.profile.full_name}.</>} />
 
       <ModuleCards cards={moduleCards} />
 

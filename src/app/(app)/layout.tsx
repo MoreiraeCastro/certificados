@@ -10,11 +10,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const notifications = await listCombinedNotifications(supabase, user.id);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50">
+    <div className="flex h-screen overflow-hidden bg-canvas">
       <Sidebar isAdmin={user.profile.role === "admin"} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Topbar userName={user.profile.full_name} notifications={notifications} />
-        <main className="flex-1 overflow-y-auto px-6 py-6">{children}</main>
+        <main className="flex-1 overflow-y-auto px-8 py-7">
+          <div className="mx-auto w-full max-w-[1440px]">{children}</div>
+        </main>
       </div>
     </div>
   );

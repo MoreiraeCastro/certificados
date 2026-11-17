@@ -26,17 +26,17 @@ function Aviso({ texto, acao, perigo, fim }: Required<Opcoes> & { texto: string;
     return () => window.removeEventListener("keydown", onKey);
   }, [fim]);
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/40 px-4" role="presentation"
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[rgba(10,16,24,.42)] backdrop-blur-[2px] px-4" role="presentation"
       onMouseDown={(event) => { if (event.target === event.currentTarget) fim(false); }}>
-      <div className="w-full max-w-md rounded-lg border border-slate-200 bg-white p-6 shadow-xl" role="alertdialog" aria-modal="true" aria-labelledby="confirmar-titulo">
-        <h2 id="confirmar-titulo" className="text-base font-semibold text-slate-900">{pergunta}</h2>
+      <div className="w-full max-w-md card p-6 shadow-xl" role="alertdialog" aria-modal="true" aria-labelledby="confirmar-titulo">
+        <h2 id="confirmar-titulo" className="text-[15px] font-semibold tracking-[-0.01em] text-[#141d28]">{pergunta}</h2>
         {detalhe.length ? <p className="mt-2 whitespace-pre-line text-sm text-slate-600">{detalhe.join("\n")}</p> : null}
         <div className="mt-6 flex justify-end gap-2">
           {/* Ação perigosa: o foco começa no Cancelar, para um Enter distraído não apagar nada. */}
           <button type="button" autoFocus={perigo} onClick={() => fim(false)}
-            className="rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Cancelar</button>
+            className="btn btn-secondary">Cancelar</button>
           <button type="button" autoFocus={!perigo} onClick={() => fim(true)}
-            className={`rounded-md px-4 py-2 text-sm font-medium text-white ${perigo ? "bg-red-600 hover:bg-red-700" : "bg-slate-900 hover:bg-slate-800"}`}>{acao}</button>
+            className={`btn ${perigo ? "btn-danger" : "btn-primary"}`}>{acao}</button>
         </div>
       </div>
     </div>

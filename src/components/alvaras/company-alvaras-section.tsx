@@ -1,4 +1,5 @@
-import { Plus, Paperclip } from "@/components/icons";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Plus, Paperclip, Stamp } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/button";
 import { AlvaraStatusBadge } from "@/components/alvaras/status-badge";
 import { AlvaraRowActions } from "@/components/alvaras/alvara-row-actions";
@@ -20,28 +21,28 @@ export function CompanyAlvarasSection({
   isAdmin: boolean;
 }) {
   return (
-    <div className="rounded-md border border-slate-200 bg-white">
-      <div className="flex items-center justify-between border-b border-slate-100 px-5 py-3">
-        <h2 className="text-sm font-semibold text-slate-900">Alvarás</h2>
+    <div className="card">
+      <div className="flex items-center justify-between border-b border-line px-5 py-3.5">
+        <h2 className="card-title">Alvarás</h2>
         <ButtonLink href={`/clientes/${companyId}/alvaras/novo`} size="sm">
           <Plus size={13} /> Novo alvará
         </ButtonLink>
       </div>
 
       {alvaras.length === 0 ? (
-        <p className="px-5 py-8 text-center text-sm text-slate-500">Nenhum alvará cadastrado para este cliente.</p>
+        <EmptyState icon={Stamp} title="Nenhum alvará cadastrado" description="Os alvarás deste cliente aparecem aqui." className="!py-8" />
       ) : (
-        <ul className="divide-y divide-slate-50">
+        <ul className="divide-y divide-[rgba(15,23,42,.08)]">
           {alvaras.map((alvara) => (
-            <li key={alvara.id} className="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+            <li key={alvara.id} className="flex flex-wrap items-center justify-between gap-3 px-5 py-3 transition-colors hover:bg-[#F8FAFC]">
               <div className="min-w-0">
-                <p className="flex items-center gap-2 text-sm font-medium text-slate-900">
+                <p className="flex items-center gap-2 text-[13.5px] font-medium text-[#141d28]">
                   <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: alvara.type_color }} />
                   {alvara.type_name}
-                  {alvara.prioritario && <span className="text-amber-600">★</span>}
+                  {alvara.prioritario && <span className="text-[#d95a08]" title="Prioritário">★</span>}
                   {alvara.attachment_name && <Paperclip size={12} className="text-slate-400" />}
                 </p>
-                <p className="mt-0.5 text-xs text-slate-500">
+                <p className="mt-0.5 text-xs tabular-nums text-slate-500">
                   {alvara.valid_to ? `Vence ${formatDate(alvara.valid_to)}` : "Sem data de vencimento"}
                   {alvara.metragem_m2 !== null ? ` · ${alvara.metragem_m2} m²` : ""}
                 </p>

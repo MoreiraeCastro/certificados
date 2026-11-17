@@ -14,10 +14,10 @@ export default async function NewCompanyPage() {
   return (
     <div className="max-w-2xl space-y-4">
       <div>
-        <h1 className="text-xl font-semibold text-slate-900">Novo cliente</h1>
-        <p className="text-sm text-slate-500">Cadastre o cliente e o certificado atual dele.</p>
+        <h1 className="page-title">Novo cliente</h1>
+        <p className="page-subtitle">Cadastre o cliente e o certificado atual dele.</p>
       </div>
-      <div className="rounded-md border border-slate-200 bg-white p-6">
+      <div className="card p-6">
         <CompanyWithCertificateForm defaultWarningDays={thresholds.warning_days} users={users ?? []} />
       </div>
     </div>

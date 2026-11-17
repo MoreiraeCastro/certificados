@@ -88,7 +88,7 @@ export function ColumnPicker({
       </Button>
 
       {open && (
-        <div className="absolute right-0 z-20 mt-1 w-72 rounded-md border border-slate-200 bg-white p-3 shadow-lg">
+        <div className="absolute right-0 z-20 mt-1 w-72 card p-3 shadow-lg">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-xs font-medium text-slate-700">Selecione os campos</p>
             <div className="flex gap-2">

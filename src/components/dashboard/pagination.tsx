@@ -23,26 +23,25 @@ export function Pagination({
   }
 
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 px-1 py-3 text-sm text-slate-600">
-      <p>
+    <div className="flex flex-wrap items-center justify-between gap-3 px-1 py-1 text-[13px] text-slate-500">
+      <p className="tabular-nums">
         Mostrando {from}–{to} de {total.toLocaleString("pt-BR")} registros
       </p>
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-1.5">
-          <span className="text-xs text-slate-500">Por página:</span>
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-slate-500">Por página</span>
+          <div className="seg">
           {[25, 50, 100, 200].map((size) => (
             <Link
               key={size}
               href={linkFor(1, size)}
-              className={
-                size === pageSize
-                  ? "rounded bg-slate-900 px-2 py-0.5 text-xs font-medium text-white"
-                  : "rounded px-2 py-0.5 text-xs text-slate-500 hover:bg-slate-100"
-              }
+              aria-current={size === pageSize ? "true" : undefined}
+              className={size === pageSize ? "seg-item is-on !h-6 tabular-nums" : "seg-item !h-6 tabular-nums"}
             >
               {size}
             </Link>
           ))}
+          </div>
         </div>
         <div className="flex items-center gap-1">
           <Link
@@ -50,13 +49,13 @@ export function Pagination({
             aria-disabled={page <= 1}
             className={
               page <= 1
-                ? "pointer-events-none rounded px-2 py-1 text-xs text-slate-300"
-                : "rounded px-2 py-1 text-xs text-slate-600 hover:bg-slate-100"
+                ? "btn btn-secondary btn-sm pointer-events-none opacity-50"
+                : "btn btn-secondary btn-sm"
             }
           >
             Anterior
           </Link>
-          <span className="px-2 text-xs text-slate-500">
+          <span className="px-2 text-xs tabular-nums text-slate-500">
             Página {page} de {totalPages}
           </span>
           <Link
@@ -64,8 +63,8 @@ export function Pagination({
             aria-disabled={page >= totalPages}
             className={
               page >= totalPages
-                ? "pointer-events-none rounded px-2 py-1 text-xs text-slate-300"
-                : "rounded px-2 py-1 text-xs text-slate-600 hover:bg-slate-100"
+                ? "btn btn-secondary btn-sm pointer-events-none opacity-50"
+                : "btn btn-secondary btn-sm"
             }
           >
             Próxima

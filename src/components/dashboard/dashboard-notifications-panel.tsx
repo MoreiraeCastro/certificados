@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { BellOff, Download } from "@/components/icons";
-import { cn } from "@/lib/utils/cn";
+import { EmptyState } from "@/components/ui/empty-state";
 import { StatusBadge } from "@/components/certificates/status-badge";
 import { markNotificationRead, markAllNotificationsRead, markActivityNotificationRead, markAllActivityNotificationsRead } from "@/lib/notifications/actions";
 import { withBasePath } from "@/lib/utils/base-path";
@@ -45,60 +45,60 @@ export function DashboardNotificationsPanel({ items }: { items: CombinedNotifica
   }
 
   return (
-    <div className="flex h-full flex-col rounded-lg border border-slate-200 bg-white">
-      <div className="flex items-center justify-between border-b border-slate-100 px-4 py-3">
-        <div className="flex rounded-md border border-slate-200 p-0.5 text-xs">
-          <button
-            type="button"
-            onClick={() => setTab("unread")}
-            className={cn(
-              "rounded px-2.5 py-1 font-medium",
-              tab === "unread" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-            )}
-          >
-            Não lidas {unread.length > 0 && `(${unread.length})`}
-          </button>
-          <button
-            type="button"
-            onClick={() => setTab("read")}
-            className={cn(
-              "rounded px-2.5 py-1 font-medium",
-              tab === "read" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-            )}
-          >
-            Lidas
-          </button>
-        </div>
+    <div className="card flex h-full flex-col overflow-hidden">
+      <div className="flex items-center justify-between gap-2 px-5 pt-4">
+        <p className="card-title">Notificações</p>
         {tab === "unread" && unread.length > 0 && (
           <button
             type="button"
             disabled={isPending}
             onClick={markAllRead}
-            className="text-xs font-medium text-slate-500 hover:text-slate-900"
+            className="link text-xs disabled:opacity-50"
           >
             Marcar todas como lidas
           </button>
         )}
       </div>
+      <div className="flex items-center justify-between border-b border-line px-5 pb-3 pt-2.5">
+        <div className="seg" role="tablist">
+          <button
+            type="button"
+            onClick={() => setTab("unread")}
+            role="tab"
+            aria-selected={tab === "unread"}
+            className="seg-item"
+          >
+            Não lidas {unread.length > 0 && <span className="count-pill">{unread.length}</span>}
+          </button>
+          <button
+            type="button"
+            onClick={() => setTab("read")}
+            role="tab"
+            aria-selected={tab === "read"}
+            className="seg-item"
+          >
+            Lidas
+          </button>
+        </div>
+      </div>
 
       <div className="max-h-[28rem] flex-1 overflow-y-auto">
         {visible.length === 0 ? (
-          <div className="flex h-full flex-col items-center justify-center gap-2 px-4 py-14 text-center">
-            <BellOff size={22} className="text-slate-300" />
-            <p className="text-sm font-medium text-slate-500">
-              {tab === "unread" ? "Tudo em dia!" : "Nenhuma notificação lida ainda."}
-            </p>
-          </div>
+          <EmptyState
+            icon={BellOff}
+            title={tab === "unread" ? "Tudo em dia" : "Nenhuma notificação lida ainda"}
+            description={tab === "unread" ? "Nenhum vencimento ou aviso pendente." : "As notificações marcadas como lidas aparecem aqui."}
+          />
         ) : (
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-[rgba(15,23,42,.08)]">
             {visible.map((item) =>
               item.kind === "due" ? (
-                <div key={item.id} className="flex items-center justify-between gap-2 px-4 py-3">
+                <div key={item.id} className="flex items-center justify-between gap-2 px-5 py-3 transition-colors hover:bg-[#F8FAFC]">
                   <Link href={`/clientes/${item.due.certificate.company_id}`} className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-slate-900">
+                    <p className="truncate text-[13px] font-medium text-[#141d28]">
                       {item.due.certificate.company_corporate_name}
                     </p>
-                    <p className="mt-0.5 flex items-center gap-1.5 text-xs text-slate-500">
+                    <p className="mt-1 flex items-center gap-1.5 text-xs tabular-nums text-slate-500">
                       Vence {formatDate(item.due.certificate.valid_to)}
                       <StatusBadge status={item.due.certificate.status} />
                     </p>
@@ -108,19 +108,19 @@ export function DashboardNotificationsPanel({ items }: { items: CombinedNotifica
                       type="button"
                       disabled={isPending}
                       onClick={() => markItemRead(item)}
-                      className="shrink-0 rounded-md border border-slate-200 px-2 py-1 text-xs font-medium text-slate-600 hover:bg-slate-50"
+                      className="shrink-0 rounded-md border border-[rgba(15,23,42,.10)] bg-white px-2 py-1 text-xs font-medium text-slate-600 transition-colors hover:border-line-strong hover:text-slate-900 disabled:opacity-50"
                     >
                       Marcar como lida
                     </button>
                   )}
                 </div>
               ) : (
-                <div key={item.id} className="flex items-start gap-3 px-4 py-3">
-                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+                <div key={item.id} className="flex items-start gap-3 px-5 py-3 transition-colors hover:bg-[#F8FAFC]">
+                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#F7F9FB] text-slate-500 shadow-[inset_0_0_0_1px_rgba(15,23,42,.08)]">
                     <Download size={15} />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm font-medium text-slate-900">{item.activity.title}</p>
+                    <p className="text-[13px] font-medium text-[#141d28]">{item.activity.title}</p>
                     <p className="mt-0.5 text-xs text-slate-500">{item.activity.message}</p>
                     <div className="mt-1 flex items-center gap-3">
                       {item.activity.action_path && (
@@ -128,7 +128,7 @@ export function DashboardNotificationsPanel({ items }: { items: CombinedNotifica
                           href={withBasePath(`/api/notifications/${item.activity.id}/download`)}
                           target="_blank"
                           rel="noreferrer"
-                          className="text-xs font-medium text-emerald-600 hover:text-emerald-700"
+                          className="link text-xs"
                         >
                           {item.activity.action_label ?? "Baixar"}
                         </a>
@@ -139,7 +139,7 @@ export function DashboardNotificationsPanel({ items }: { items: CombinedNotifica
                           type="button"
                           disabled={isPending}
                           onClick={() => markItemRead(item)}
-                          className="text-xs font-medium text-slate-500 hover:text-slate-900"
+                          className="text-xs font-medium text-slate-500 hover:text-slate-900 disabled:opacity-50"
                         >
                           Marcar como lida
                         </button>

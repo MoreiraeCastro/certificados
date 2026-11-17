@@ -1,6 +1,7 @@
+import { EmptyState } from "@/components/ui/empty-state";
 import Link from "next/link";
 import { ClickableRow } from "@/components/ui/clickable-row";
-import { ArrowUpDown } from "@/components/icons";
+import { ArrowUpDown, Stamp } from "@/components/icons";
 import { formatDocument } from "@/lib/documents/document";
 import { AlvaraStatusBadge } from "@/components/alvaras/status-badge";
 import { AlvaraRowActions } from "@/components/alvaras/alvara-row-actions";
@@ -117,34 +118,34 @@ export function AlvarasTable({
 }) {
   if (rows.length === 0) {
     return (
-      <div className="rounded-md border border-dashed border-slate-300 bg-white py-16 text-center">
-        <p className="text-sm text-slate-500">Nenhum alvará encontrado com os filtros atuais.</p>
+      <div className="card">
+        <EmptyState icon={Stamp} title="Nenhum alvará encontrado" description="Ajuste ou limpe os filtros para ver outros resultados." />
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-md border border-slate-200 bg-white">
-      <table className="w-full min-w-max text-left text-sm">
+    <div className="table-wrap">
+      <table className="data-table min-w-max">
         <thead>
-          <tr className="border-b border-slate-200 bg-slate-50 text-xs font-medium uppercase tracking-wide text-slate-500">
+          <tr>
             {columns.map((col) => (
-              <th key={col.key} className="whitespace-nowrap px-4 py-2.5">
+              <th key={col.key}>
                 <SortableHeader column={col} currentSort={sort} currentDir={dir} currentQuery={currentQuery} />
               </th>
             ))}
-            <th className="whitespace-nowrap px-4 py-2.5">Ações</th>
+            <th className="col-actions">Ações</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => (
-            <ClickableRow key={row.id} href={`/clientes/${row.company_id}`} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+            <ClickableRow key={row.id} href={`/clientes/${row.company_id}`}>
               {columns.map((col) => (
-                <td key={col.key} className="whitespace-nowrap px-4 py-2.5 text-slate-700">
+                <td key={col.key} className="whitespace-nowrap">
                   {renderCell(row, col.key)}
                 </td>
               ))}
-              <td className="whitespace-nowrap px-4 py-2.5">
+              <td className="col-actions">
                 <AlvaraRowActions alvaraId={row.id} companyId={row.company_id} archived={row.archived} isAdmin={isAdmin} />
               </td>
             </ClickableRow>

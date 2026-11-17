@@ -128,16 +128,18 @@ export function AlvaraImportWizard() {
   return (
     <div className="space-y-4">
       {error && (
-        <div className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 ring-1 ring-inset ring-red-200">{error}</div>
+        <div className="alert alert-danger">{error}</div>
       )}
 
       {step === "upload" && (
-        <label className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-slate-300 bg-white px-6 py-16 text-center hover:border-slate-400">
-          <UploadCloud size={28} className="text-slate-400" />
-          <p className="text-sm font-medium text-slate-700">
+        <label className="dropzone !py-14" aria-busy={loading}>
+          <span className="dropzone-icon">
+            {loading ? <span className="spinner" aria-hidden="true" /> : <UploadCloud size={18} strokeWidth={1.7} />}
+          </span>
+          <p className="dropzone-title mt-1">
             {loading ? "Lendo arquivo..." : "Clique para selecionar uma planilha de alvarás"}
           </p>
-          <p className="text-xs text-slate-500">.xlsx, .xls ou .csv</p>
+          <p className="dropzone-hint">.xlsx, .xls ou .csv</p>
           <input
             type="file"
             accept=".xlsx,.xls,.csv"
@@ -153,19 +155,19 @@ export function AlvaraImportWizard() {
 
       {step === "mapping" && analysis && (
         <div className="space-y-4">
-          <div className="rounded-md border border-slate-200 bg-white p-4">
+          <div className="card p-4">
             <p className="text-sm text-slate-700">
               <strong>{file?.name}</strong> · {analysis.rowCount} linha(s) encontrada(s)
             </p>
           </div>
 
-          <div className="rounded-md border border-slate-200 bg-white">
-            <table className="w-full text-left text-sm">
+          <div className="card">
+            <table className="data-table">
               <thead>
-                <tr className="border-b border-slate-100 text-xs font-medium uppercase tracking-wide text-slate-400">
-                  <th className="px-4 py-2">Coluna do arquivo</th>
-                  <th className="px-4 py-2">Exemplo</th>
-                  <th className="px-4 py-2">Campo do sistema</th>
+                <tr>
+                  <th>Coluna do arquivo</th>
+                  <th>Exemplo</th>
+                  <th>Campo do sistema</th>
                 </tr>
               </thead>
               <tbody>
@@ -231,7 +233,7 @@ export function AlvaraImportWizard() {
 
       {step === "done" && result && (
         <div className="space-y-4">
-          <div className="flex items-center gap-2 rounded-md bg-emerald-50 px-4 py-3 text-emerald-800 ring-1 ring-inset ring-emerald-200">
+          <div className="flex items-center gap-2 alert alert-ok">
             <CheckCircle2 size={18} />
             <p className="text-sm font-medium">Importação concluída.</p>
           </div>
@@ -247,7 +249,7 @@ export function AlvaraImportWizard() {
 
           <div className="flex gap-2">
             <Button onClick={reset}>Nova importação</Button>
-            <Link href="/importar" className="text-sm text-slate-600 underline">
+            <Link href="/importar" className="btn btn-secondary">
               Voltar para importação
             </Link>
           </div>
@@ -273,7 +275,7 @@ function RowsTable({ rows }: { rows: AlvaraImportRowOutcome[] }) {
   if (notable.length === 0) return null;
 
   return (
-    <div className="max-h-96 overflow-y-auto rounded-md border border-slate-200 bg-white">
+    <div className="max-h-96 overflow-y-auto card">
       <table className="w-full text-left text-xs">
         <thead className="sticky top-0 bg-slate-50">
           <tr className="border-b border-slate-100 uppercase tracking-wide text-slate-400">

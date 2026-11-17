@@ -1,7 +1,8 @@
 "use client";
 
+import { EmptyState } from "@/components/ui/empty-state";
 import { useState, useTransition } from "react";
-import { Plus, Pencil, Trash2 } from "@/components/icons";
+import { Plus, Pencil, Trash2, Stamp } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { AlvaraTypeForm } from "./type-form";
@@ -22,14 +23,14 @@ export function AlvaraTypesManager({ types }: { types: AlvaraType[] }) {
         </Button>
       </div>
 
-      <div className="divide-y divide-slate-100 rounded-md border border-slate-200 bg-white">
+      <div className="card divide-y divide-[rgba(15,23,42,.08)] overflow-hidden">
         {types.map((type) => (
           <div key={type.id} className="flex items-center justify-between gap-3 px-4 py-3">
             <div className="flex min-w-0 items-center gap-2">
               <span className="h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: type.color }} />
               <p className="truncate text-sm font-medium text-slate-900">{type.name}</p>
               {type.shared_attachment_by_municipality && (
-                <span className="shrink-0 rounded-full bg-slate-100 px-1.5 py-0.5 text-[10px] font-medium text-slate-500">
+                <span className="shrink-0 pill pill-neutral !h-5 before:!hidden">
                   anexo por município
                 </span>
               )}
@@ -39,7 +40,7 @@ export function AlvaraTypesManager({ types }: { types: AlvaraType[] }) {
                 type="button"
                 title="Editar"
                 onClick={() => setModalType(type)}
-                className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+                className="icon-btn !h-7 !w-7"
               >
                 <Pencil size={14} />
               </button>
@@ -52,7 +53,7 @@ export function AlvaraTypesManager({ types }: { types: AlvaraType[] }) {
                     startTransition(() => deleteAlvaraType(type.id));
                   }
                 }}
-                className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-red-700"
+                className="icon-btn !h-7 !w-7 hover:!text-[#b03a3a]"
               >
                 <Trash2 size={14} />
               </button>
@@ -60,7 +61,7 @@ export function AlvaraTypesManager({ types }: { types: AlvaraType[] }) {
           </div>
         ))}
         {types.length === 0 && (
-          <p className="px-4 py-8 text-center text-sm text-slate-500">Nenhum tipo de alvará cadastrado ainda.</p>
+          <EmptyState icon={Stamp} title="Nenhum tipo de alvará cadastrado" description="Crie os tipos (ex. Sanitário, Funcionamento) para usar nos alvarás." />
         )}
       </div>
 

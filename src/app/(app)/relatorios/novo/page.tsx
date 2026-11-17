@@ -52,24 +52,23 @@ export default async function ReportBuilderPage({ searchParams }: { searchParams
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-xl font-semibold text-slate-900">Construtor de relatórios</h1>
-          <p className="text-sm text-slate-500">Escolha a base, aplique filtros, selecione colunas e exporte.</p>
+      <div className="page-header">
+        <div className="min-w-0">
+          <h1 className="page-title">Construtor de relatórios</h1>
+          <p className="page-subtitle">Escolha a base, aplique filtros, selecione colunas e exporte.</p>
         </div>
-        <Link href="/relatorios" className="text-xs text-slate-500 hover:text-slate-900">
+        <Link href="/relatorios" className="btn btn-secondary btn-sm">
           ← Relatórios
         </Link>
       </div>
 
-      <div className="flex gap-2">
+      <div className="seg">
         {(Object.keys(REPORT_BASE_LABELS) as ReportBase[]).map((option) => (
           <Link
             key={option}
             href={baseHref(option)}
-            className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-              option === base ? "bg-slate-900 text-white" : "bg-white text-slate-600 ring-1 ring-inset ring-slate-300"
-            }`}
+            aria-current={option === base ? "true" : undefined}
+            className={`seg-item !h-8 !px-3.5 !text-[13px] ${option === base ? "is-on" : ""}`}
           >
             {REPORT_BASE_LABELS[option]}
           </Link>

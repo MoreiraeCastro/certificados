@@ -34,13 +34,13 @@ export function CertificateAttachment({
   const [removing, startRemoving] = useTransition();
 
   return (
-    <div className="mt-4 rounded-md border border-slate-200 bg-slate-50 p-4">
-      <p className="mb-2 flex items-center gap-1.5 text-xs font-medium text-slate-700">
+    <div className="mt-4 rounded-lg border border-line bg-white p-4">
+      <p className="mb-3 flex items-center gap-1.5 text-xs font-medium text-slate-700 [&_svg]:text-slate-400">
         <Paperclip size={13} /> Arquivo do certificado
       </p>
 
       {attachmentName ? (
-        <div className="flex items-center justify-between gap-3 rounded-md border border-slate-200 bg-white px-3 py-2">
+        <div className="flex items-center justify-between gap-3 rounded-md border border-line bg-[#F8FAFC] px-3 py-2">
           <div className="min-w-0">
             <p className="truncate text-sm text-slate-900">{attachmentName}</p>
             {attachmentSize !== null && <p className="text-xs text-slate-500">{formatSize(attachmentSize)}</p>}
@@ -49,7 +49,7 @@ export function CertificateAttachment({
             <a
               href={withBasePath(`/api/certificates/${certificateId}/attachment`)}
               title="Baixar"
-              className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+              className="icon-btn !h-7 !w-7"
             >
               <Download size={14} />
             </a>
@@ -62,7 +62,7 @@ export function CertificateAttachment({
                   startRemoving(() => removeCertificateAttachment(certificateId, companyId));
                 }
               }}
-              className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-red-700"
+              className="icon-btn !h-7 !w-7 hover:!text-[#b03a3a]"
             >
               <Trash2 size={14} />
             </button>}
@@ -72,19 +72,19 @@ export function CertificateAttachment({
         <p className="mb-2 text-xs text-slate-500">Nenhum arquivo anexado.</p>
       )}
 
-      <form action={formAction} className="mt-2 flex items-center gap-2">
+      <form action={formAction} className="dropzone dropzone-inline mt-3">
         <input
           type="file"
           name="file"
           accept=".pfx,.p12"
           required
-          className="flex-1 text-xs text-slate-600 file:mr-2 file:rounded-md file:border-0 file:bg-slate-900 file:px-2.5 file:py-1.5 file:text-xs file:font-medium file:text-white"
+          className="file-input"
         />
         <Button type="submit" size="sm" variant="secondary" disabled={pending}>
           {pending ? "Enviando..." : attachmentName ? "Substituir" : "Enviar"}
         </Button>
       </form>
-      {state.error && <p className="mt-1.5 text-xs text-red-600">{state.error}</p>}
+      {state.error && <p className="mt-1.5 text-xs text-[#b03a3a]">{state.error}</p>}
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { FileBarChart } from "@/components/icons";
+import { EmptyState } from "@/components/ui/empty-state";
 import { getExportValue, type ReportBase } from "@/lib/reports/engine";
 import type { ColumnDef } from "@/lib/certificates/columns";
 
@@ -22,19 +24,19 @@ export function ReportTable({
 }) {
   if (rows.length === 0) {
     return (
-      <div className="rounded-md border border-dashed border-slate-300 bg-white py-16 text-center">
-        <p className="text-sm text-slate-500">Nenhum registro encontrado com os filtros atuais.</p>
+      <div className="card">
+        <EmptyState icon={FileBarChart} title="Nenhum registro encontrado" description="Ajuste os filtros do relatório e gere novamente." />
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-md border border-slate-200 bg-white">
-      <table className="w-full min-w-max text-left text-sm">
+    <div className="table-wrap">
+      <table className="data-table min-w-max">
         <thead>
-          <tr className="border-b border-slate-200 bg-slate-50 text-xs font-medium uppercase tracking-wide text-slate-500">
+          <tr>
             {columns.map((col) => (
-              <th key={col.key} className="whitespace-nowrap px-4 py-2.5">
+              <th key={col.key}>
                 {col.label}
               </th>
             ))}
@@ -42,9 +44,9 @@ export function ReportTable({
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr key={i} className="border-b border-slate-100 last:border-0 hover:bg-slate-50">
+            <tr key={i}>
               {columns.map((col) => (
-                <td key={col.key} className="whitespace-nowrap px-4 py-2.5 text-slate-700">
+                <td key={col.key} className="whitespace-nowrap">
                   {formatCellValue(getExportValue(base, row, col.key).value)}
                 </td>
               ))}

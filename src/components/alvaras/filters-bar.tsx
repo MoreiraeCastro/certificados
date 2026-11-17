@@ -81,31 +81,32 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
   }
 
   return (
-    <div className="rounded-md border border-slate-200 bg-white">
+    <div className="card">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-slate-700"
+        aria-expanded={open}
+        className="flex w-full items-center justify-between rounded-[10px] px-4 py-2.5 text-[13px] font-medium text-slate-700 transition-colors hover:bg-[#F8FAFC]"
       >
         <span className="flex items-center gap-2">
-          <Filter size={14} />
+          <Filter size={14} className="text-slate-400" />
           Filtros
           {activeFilterCount > 0 && (
-            <span className="rounded-full bg-slate-900 px-1.5 py-0.5 text-xs text-white">{activeFilterCount}</span>
+            <span className="count-pill">{activeFilterCount}</span>
           )}
         </span>
-        <span className="text-xs text-slate-400">{open ? "Ocultar" : "Mostrar"}</span>
+        <span className="text-xs text-slate-500">{open ? "Ocultar" : "Mostrar"}</span>
       </button>
 
       {open && (
-        <div className="border-t border-slate-100 p-4">
+        <div className="border-t border-line p-4">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             <div className="col-span-2 sm:col-span-1">
-              <label className="mb-1 block text-xs font-medium text-slate-700">Empresa, código ou tipo</label>
+              <label className="field-label">Empresa, código ou tipo</label>
               <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Buscar..." />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Status</label>
+              <label className="field-label">Status</label>
               <Select value={status} onChange={(e) => setStatus(e.target.value)}>
                 {STATUS_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -115,7 +116,7 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Tipo</label>
+              <label className="field-label">Tipo</label>
               <Select value={typeId} onChange={(e) => setTypeId(e.target.value)}>
                 <option value="">Todos</option>
                 {types.map((t) => (
@@ -126,7 +127,7 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Prioritário</label>
+              <label className="field-label">Prioritário</label>
               <Select value={prioritario} onChange={(e) => setPrioritario(e.target.value)}>
                 <option value="">Todos</option>
                 <option value="true">Só prioritários</option>
@@ -134,7 +135,7 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Anexo</label>
+              <label className="field-label">Anexo</label>
               <Select value={hasAttachment} onChange={(e) => setHasAttachment(e.target.value)}>
                 <option value="">Todos</option>
                 <option value="false">Sem anexo</option>
@@ -142,19 +143,19 @@ export function AlvarasFiltersBar({ types }: { types: AlvaraType[] }) {
               </Select>
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Município</label>
+              <label className="field-label">Município</label>
               <Input value={municipality} onChange={(e) => setMunicipality(e.target.value)} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">UF</label>
+              <label className="field-label">UF</label>
               <Input value={uf} maxLength={2} onChange={(e) => setUf(e.target.value.toUpperCase())} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Vencimento de</label>
+              <label className="field-label">Vencimento de</label>
               <Input type="date" value={dueFrom} onChange={(e) => setDueFrom(e.target.value)} />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-slate-700">Vencimento até</label>
+              <label className="field-label">Vencimento até</label>
               <Input type="date" value={dueTo} onChange={(e) => setDueTo(e.target.value)} />
             </div>
           </div>

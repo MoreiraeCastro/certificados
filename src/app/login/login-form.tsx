@@ -23,11 +23,11 @@ export function LoginForm({ next }: { next: string }) {
         <Label htmlFor="password">Senha</Label>
         <PasswordInput id="password" name="password" autoComplete="current-password" required />
       </div>
-      {state.error && <p className="text-sm text-red-600">{state.error}</p>}
+      {state.error && <p className="text-[13px] text-[#b03a3a]">{state.error}</p>}
       <Button type="submit" className="w-full" disabled={pending}>
         {pending ? "Entrando..." : "Entrar"}
       </Button>
-      <Link href="/recuperar-senha" className="block text-center text-sm text-slate-500 hover:text-slate-700">
+      <Link href="/recuperar-senha" className="link block text-center text-[13px]">
         Esqueci minha senha
       </Link>
     </form>

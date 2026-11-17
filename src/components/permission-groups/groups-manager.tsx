@@ -1,7 +1,8 @@
 "use client";
 
+import { EmptyState } from "@/components/ui/empty-state";
 import { useState, useTransition } from "react";
-import { Plus, Pencil, Trash2 } from "@/components/icons";
+import { Plus, Pencil, Trash2, Users } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { GroupForm } from "./group-form";
@@ -30,7 +31,7 @@ export function GroupsManager({ groups }: { groups: PermissionGroupWithModules[]
         </Button>
       </div>
 
-      <div className="divide-y divide-slate-100 rounded-md border border-slate-200 bg-white">
+      <div className="card divide-y divide-[rgba(15,23,42,.08)] overflow-hidden">
         {groups.map((group) => (
           <div key={group.id} className="flex items-center justify-between gap-3 px-4 py-3">
             <div className="min-w-0">
@@ -45,7 +46,7 @@ export function GroupsManager({ groups }: { groups: PermissionGroupWithModules[]
                 type="button"
                 title="Editar"
                 onClick={() => setModalGroup(group)}
-                className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+                className="icon-btn !h-7 !w-7"
               >
                 <Pencil size={14} />
               </button>
@@ -58,7 +59,7 @@ export function GroupsManager({ groups }: { groups: PermissionGroupWithModules[]
                     startTransition(() => deletePermissionGroup(group.id));
                   }
                 }}
-                className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-red-700"
+                className="icon-btn !h-7 !w-7 hover:!text-[#b03a3a]"
               >
                 <Trash2 size={14} />
               </button>
@@ -66,7 +67,7 @@ export function GroupsManager({ groups }: { groups: PermissionGroupWithModules[]
           </div>
         ))}
         {groups.length === 0 && (
-          <p className="px-4 py-8 text-center text-sm text-slate-500">Nenhum grupo cadastrado ainda.</p>
+          <EmptyState icon={Users} title="Nenhum grupo cadastrado" description="Crie um grupo para definir quais módulos cada equipe acessa." />
         )}
       </div>
 

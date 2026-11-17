@@ -52,10 +52,10 @@ export default async function DashboardPage({
 
   return (
     <div className="space-y-5">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h1 className="text-xl font-semibold text-slate-900">Certificados Digitais</h1>
-          <p className="text-sm text-slate-500">Gerencie os certificados digitais dos clientes.</p>
+      <div className="page-header">
+        <div className="min-w-0">
+          <h1 className="page-title">Certificados Digitais</h1>
+          <p className="page-subtitle">Gerencie os certificados digitais dos clientes.</p>
         </div>
         <NewCompanyModal defaultWarningDays={thresholds.warning_days} users={users ?? []} />
       </div>

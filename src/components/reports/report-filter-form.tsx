@@ -10,18 +10,18 @@ function get(params: SearchParams, key: string): string {
 
 export function ReportFilterForm({ base, searchParams }: { base: ReportBase; searchParams: SearchParams }) {
   return (
-    <form method="get" className="flex flex-wrap items-end gap-3 rounded-md border border-slate-200 bg-white p-4">
+    <form method="get" className="flex flex-wrap items-end gap-3 card p-4">
       <input type="hidden" name="base" value={base} />
       {get(searchParams, "cols") && <input type="hidden" name="cols" value={get(searchParams, "cols")} />}
 
       <div className="min-w-[200px] flex-1">
-        <label className="mb-1 block text-xs font-medium text-slate-700">Empresa, código ou CNPJ/CPF</label>
+        <label className="field-label">Empresa, código ou CNPJ/CPF</label>
         <Input name="q" defaultValue={get(searchParams, "q")} placeholder="Buscar..." />
       </div>
 
       {base === "certificates" && (
         <div className="w-40">
-          <label className="mb-1 block text-xs font-medium text-slate-700">Status</label>
+          <label className="field-label">Status</label>
           <Select name="status" defaultValue={get(searchParams, "status")}>
             <option value="">Todos</option>
             <option value="EM_DIA">Em dia</option>
@@ -35,7 +35,7 @@ export function ReportFilterForm({ base, searchParams }: { base: ReportBase; sea
 
       {base === "certificates" && (
         <div className="w-32">
-          <label className="mb-1 block text-xs font-medium text-slate-700">Modelo</label>
+          <label className="field-label">Modelo</label>
           <Select name="model" defaultValue={get(searchParams, "model")}>
             <option value="">Todos</option>
             <option value="A1">A1</option>
@@ -47,27 +47,27 @@ export function ReportFilterForm({ base, searchParams }: { base: ReportBase; sea
       {base === "certificates" && (
         <>
           <div className="w-36">
-            <label className="mb-1 block text-xs font-medium text-slate-700">Vencimento de</label>
+            <label className="field-label">Vencimento de</label>
             <Input type="date" name="dueFrom" defaultValue={get(searchParams, "dueFrom")} />
           </div>
           <div className="w-36">
-            <label className="mb-1 block text-xs font-medium text-slate-700">Vencimento até</label>
+            <label className="field-label">Vencimento até</label>
             <Input type="date" name="dueTo" defaultValue={get(searchParams, "dueTo")} />
           </div>
         </>
       )}
 
       <div className="w-40">
-        <label className="mb-1 block text-xs font-medium text-slate-700">Município</label>
+        <label className="field-label">Município</label>
         <Input name={base === "certificates" ? "municipality" : "municipality"} defaultValue={get(searchParams, "municipality")} />
       </div>
       <div className="w-20">
-        <label className="mb-1 block text-xs font-medium text-slate-700">UF</label>
+        <label className="field-label">UF</label>
         <Input name="uf" maxLength={2} defaultValue={get(searchParams, "uf")} />
       </div>
 
       <div className="w-32">
-        <label className="mb-1 block text-xs font-medium text-slate-700">
+        <label className="field-label">
           {base === "companies" ? "Situação" : "Empresa ativa"}
         </label>
         <Select name="active" defaultValue={get(searchParams, "active")}>
@@ -79,7 +79,7 @@ export function ReportFilterForm({ base, searchParams }: { base: ReportBase; sea
 
       {base === "certificates" && (
         <div className="w-32">
-          <label className="mb-1 block text-xs font-medium text-slate-700">Arquivado</label>
+          <label className="field-label">Arquivado</label>
           <Select name="archived" defaultValue={get(searchParams, "archived")}>
             <option value="">Todos</option>
             <option value="false">Não</option>
@@ -90,7 +90,7 @@ export function ReportFilterForm({ base, searchParams }: { base: ReportBase; sea
 
       <button
         type="submit"
-        className="rounded-md bg-slate-900 px-3.5 py-1.5 text-sm font-medium text-white hover:bg-slate-800"
+        className="btn btn-primary"
       >
         Filtrar
       </button>

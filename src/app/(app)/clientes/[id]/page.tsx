@@ -1,6 +1,7 @@
+import { EmptyState } from "@/components/ui/empty-state";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Pencil, Plus } from "@/components/icons";
+import { Pencil, Plus, FileCheck2, History } from "@/components/icons";
 import { createClient } from "@/lib/supabase/server";
 import { formatDocument } from "@/lib/documents/document";
 import { StatusBadge } from "@/components/certificates/status-badge";
@@ -83,45 +84,45 @@ export default async function CompanyDetailPage({
   return (
     <div className="space-y-6">
       {erro === "certificado" && (
-        <div className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-700 ring-1 ring-inset ring-amber-200">
+        <div className="alert alert-warn">
           O cliente foi criado, mas não foi possível salvar o certificado. Cadastre-o abaixo.
         </div>
       )}
-      <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-xl font-semibold text-slate-900">{typedCompany.corporate_name}</h1>
-          {typedCompany.short_name && <p className="text-sm text-slate-500">{typedCompany.short_name}</p>}
+      <div className="page-header">
+        <div className="min-w-0">
+          <h1 className="page-title">{typedCompany.corporate_name}</h1>
+          {typedCompany.short_name && <p className="page-subtitle">{typedCompany.short_name}</p>}
         </div>
         <ButtonLink href={`/clientes/${id}/editar`} variant="secondary" size="sm">
           <Pencil size={13} /> Editar cliente
         </ButtonLink>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 rounded-md border border-slate-200 bg-white p-5 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-4 card p-5 sm:grid-cols-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Código</p>
-          <p className="mt-0.5 text-sm font-medium text-slate-900">{typedCompany.code}</p>
+          <p className="meta-label">Código</p>
+          <p className="meta-value">{typedCompany.code}</p>
         </div>
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">CNPJ/CPF</p>
-          <p className="mt-0.5 text-sm font-medium text-slate-900">{formatDocument(typedCompany.document)}</p>
+          <p className="meta-label">CNPJ/CPF</p>
+          <p className="meta-value">{formatDocument(typedCompany.document)}</p>
         </div>
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Município/UF</p>
-          <p className="mt-0.5 text-sm font-medium text-slate-900">
+          <p className="meta-label">Município/UF</p>
+          <p className="meta-value">
             {typedCompany.municipality ?? "-"}
             {typedCompany.uf ? ` - ${typedCompany.uf}` : ""}
           </p>
         </div>
         <div>
-          <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Responsável</p>
-          <p className="mt-0.5 text-sm font-medium text-slate-900">{responsibleLabel}</p>
+          <p className="meta-label">Responsável</p>
+          <p className="meta-value">{responsibleLabel}</p>
         </div>
       </div>
 
-      <div className="rounded-md border border-slate-200 bg-white p-5">
+      <div className="card p-5">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-slate-900">Certificado atual</h2>
+          <h2 className="card-title">Certificado atual</h2>
           <ButtonLink href={`/clientes/${id}/certificados/novo`} size="sm">
             <Plus size={13} /> {current ? "Renovar certificado" : "Novo certificado"}
           </ButtonLink>
@@ -130,21 +131,21 @@ export default async function CompanyDetailPage({
         {current ? (
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Tipo</p>
-              <p className="mt-0.5 text-sm text-slate-900">
+              <p className="meta-label">Tipo</p>
+              <p className="meta-value">
                 {current.type === "e-cnpj" ? "e-CNPJ" : "e-CPF"} · {current.model}
               </p>
             </div>
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Válido até</p>
-              <p className="mt-0.5 text-sm text-slate-900">{formatDate(current.valid_to)}</p>
+              <p className="meta-label">Válido até</p>
+              <p className="meta-value">{formatDate(current.valid_to)}</p>
             </div>
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Dias restantes</p>
-              <p className="mt-0.5 text-sm text-slate-900">{current.archived ? "-" : current.days_remaining}</p>
+              <p className="meta-label">Dias restantes</p>
+              <p className="meta-value">{current.archived ? "-" : current.days_remaining}</p>
             </div>
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Status</p>
+              <p className="meta-label">Status</p>
               <div className="mt-0.5">
                 <StatusBadge status={current.status} />
               </div>
@@ -160,47 +161,47 @@ export default async function CompanyDetailPage({
             isAdmin={user.profile.role === "admin"}
           />
         ) : (
-          <p className="text-sm text-slate-500">Nenhum certificado cadastrado para este cliente.</p>
+          <EmptyState icon={FileCheck2} title="Nenhum certificado cadastrado" description="Cadastre o certificado atual deste cliente para acompanhar o vencimento." className="!py-6" />
         )}
       </div>
 
       <CompanyAlvarasSection companyId={id} alvaras={alvaraRows} isAdmin={user.profile.role === "admin"} />
 
-      <div className="rounded-md border border-slate-200 bg-white">
-        <div className="border-b border-slate-100 px-5 py-3">
-          <h2 className="text-sm font-semibold text-slate-900">Histórico de certificados</h2>
+      <div className="card">
+        <div className="border-b border-line px-5 py-3.5">
+          <h2 className="card-title">Histórico de certificados</h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full min-w-max text-left text-sm">
+          <table className="data-table min-w-max">
             <thead>
-              <tr className="border-b border-slate-100 text-xs font-medium uppercase tracking-wide text-slate-400">
-                <th className="px-5 py-2">Tipo</th>
-                <th className="px-5 py-2">Início</th>
-                <th className="px-5 py-2">Vencimento</th>
-                <th className="px-5 py-2">Status</th>
-                <th className="px-5 py-2">Ações</th>
+              <tr>
+                <th>Tipo</th>
+                <th>Início</th>
+                <th>Vencimento</th>
+                <th>Status</th>
+                <th className="col-actions">Ações</th>
               </tr>
             </thead>
             <tbody>
               {rows.map((cert) => (
-                <tr key={cert.id} className="border-b border-slate-50 last:border-0 hover:bg-slate-50">
-                  <td className="px-5 py-2.5 text-slate-700">
+                <tr key={cert.id}>
+                  <td>
                     {cert.type === "e-cnpj" ? "e-CNPJ" : "e-CPF"} · {cert.model}
                   </td>
-                  <td className="px-5 py-2.5 text-slate-700">{formatDate(cert.valid_from)}</td>
-                  <td className="px-5 py-2.5 text-slate-700">{formatDate(cert.valid_to)}</td>
-                  <td className="px-5 py-2.5">
+                  <td>{formatDate(cert.valid_from)}</td>
+                  <td>{formatDate(cert.valid_to)}</td>
+                  <td>
                     <StatusBadge status={cert.status} />
                   </td>
-                  <td className="px-5 py-2.5">
+                  <td className="col-actions">
                     <CertificateActions certificateId={cert.id} companyId={id} archived={cert.archived} />
                   </td>
                 </tr>
               ))}
               {rows.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-5 py-8 text-center text-sm text-slate-500">
-                    Nenhum certificado no histórico.
+                  <td colSpan={5} className="!p-0">
+                    <EmptyState icon={History} title="Nenhum certificado no histórico" className="!py-8" />
                   </td>
                 </tr>
               )}
@@ -209,11 +210,11 @@ export default async function CompanyDetailPage({
         </div>
       </div>
 
-      <div className="rounded-md border border-slate-200 bg-white">
-        <div className="border-b border-slate-100 px-5 py-3">
-          <h2 className="text-sm font-semibold text-slate-900">Histórico de alterações</h2>
+      <div className="card">
+        <div className="border-b border-line px-5 py-3.5">
+          <h2 className="card-title">Histórico de alterações</h2>
         </div>
-        <ul className="divide-y divide-slate-50">
+        <ul className="divide-y divide-[rgba(15,23,42,.08)]">
           {((history ?? []) as (CertificateHistoryEntry & { changed_by_profile: { full_name: string } | null })[]).map(
             (entry) => (
               <li key={entry.id} className="px-5 py-3 text-sm">
@@ -233,13 +234,13 @@ export default async function CompanyDetailPage({
             )
           )}
           {(!history || history.length === 0) && (
-            <li className="px-5 py-8 text-center text-sm text-slate-500">Nenhuma alteração registrada ainda.</li>
+            <li><EmptyState icon={History} title="Nenhuma alteração registrada ainda" className="!py-8" /></li>
           )}
         </ul>
       </div>
 
       <div>
-        <Link href="/painel-certificados" className="text-xs text-slate-500 hover:text-slate-900">
+        <Link href="/painel-certificados" className="link text-xs">
           ← Voltar para certificados
         </Link>
       </div>

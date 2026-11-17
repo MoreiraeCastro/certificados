@@ -22,7 +22,7 @@ export function CertificateActions({
       <Link
         href={`/clientes/${companyId}/certificados/${certificateId}/editar`}
         title="Editar"
-        className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+        className="icon-btn !h-7 !w-7"
       >
         <Pencil size={14} />
       </Link>
@@ -32,7 +32,7 @@ export function CertificateActions({
           title="Restaurar"
           disabled={isPending}
           onClick={() => startTransition(() => restoreCertificate(certificateId, companyId))}
-          className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-emerald-700"
+          className="icon-btn !h-7 !w-7 hover:!text-[#1b7a51]"
         >
           <ArchiveRestore size={14} />
         </button>
@@ -46,7 +46,7 @@ export function CertificateActions({
               startTransition(() => archiveCertificate(certificateId, companyId));
             }
           }}
-          className="rounded p-1.5 text-slate-500 hover:bg-slate-100 hover:text-amber-700"
+          className="icon-btn !h-7 !w-7 hover:!text-[#97600a]"
         >
           <Archive size={14} />
         </button>

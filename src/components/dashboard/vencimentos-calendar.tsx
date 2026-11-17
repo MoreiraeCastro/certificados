@@ -3,7 +3,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { format, isSameDay, isSameMonth, parseISO } from "date-fns";
-import { ChevronLeft, ChevronRight } from "@/components/icons";
+import { CalendarCheck, ChevronLeft, ChevronRight } from "@/components/icons";
+import { EmptyState } from "@/components/ui/empty-state";
 import { cn } from "@/lib/utils/cn";
 import { shiftReferenceDate, type CalendarItem, type CalendarView } from "@/lib/certificates/calendar";
 
@@ -13,18 +14,18 @@ const CATEGORY_LABELS: Record<CalendarItem["category"], string> = {
 };
 
 const CATEGORY_DOT_CLASSES: Record<CalendarItem["category"], string> = {
-  certificados: "bg-blue-600",
-  alvaras: "bg-amber-600",
+  certificados: "bg-[#4b5fb8]",
+  alvaras: "bg-[#b58a1f]",
 };
 
 const CATEGORY_CHIP_CLASSES: Record<CalendarItem["category"], string> = {
-  certificados: "bg-blue-50 text-blue-700 hover:bg-blue-100",
-  alvaras: "bg-amber-50 text-amber-700 hover:bg-amber-100",
+  certificados: "border-line bg-white text-slate-700 hover:border-line-strong",
+  alvaras: "border-line bg-white text-slate-700 hover:border-line-strong",
 };
 
 const CATEGORY_SOLID_CLASSES: Record<CalendarItem["category"], string> = {
-  certificados: "bg-blue-600 text-white hover:bg-blue-700",
-  alvaras: "bg-amber-600 text-white hover:bg-amber-700",
+  certificados: "bg-[#EEF2FF] text-[#3B4A9E] shadow-[inset_2px_0_0_#4b5fb8] hover:bg-[#E0E7FF]",
+  alvaras: "bg-[#FFFBEB] text-[#8A6414] shadow-[inset_2px_0_0_#b58a1f] hover:bg-[#FEF3C7]",
 };
 
 function formatDate(value: string): string {
@@ -86,84 +87,95 @@ export function VencimentosCalendar({
   }
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white">
-      <div className="flex items-center justify-center gap-3 border-b border-slate-100 px-4 py-4">
+    <div className="card overflow-hidden">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3.5">
+        <div className="flex items-center gap-1">
         <button
           type="button"
           onClick={() => navigate(-1)}
-          className="rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+          className="icon-btn"
           title="Anterior"
+          aria-label="Período anterior"
         >
-          <ChevronLeft size={18} />
+          <ChevronLeft size={16} />
         </button>
-        <p className="min-w-48 text-center text-lg font-bold capitalize text-slate-900">{monthLabel}</p>
+        <p className="min-w-44 text-center text-[15px] font-semibold capitalize tracking-[-0.01em] text-[#141d28]">{monthLabel}</p>
         <button
           type="button"
           onClick={() => navigate(1)}
-          className="rounded-full p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-900"
+          className="icon-btn"
           title="Próximo"
+          aria-label="Próximo período"
         >
-          <ChevronRight size={18} />
+          <ChevronRight size={16} />
         </button>
-      </div>
+        </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-2 border-b border-slate-100 px-4 py-2.5">
-        <div className="flex rounded-md border border-slate-200 p-0.5 text-xs">
+        <div className="seg">
           <button
             type="button"
             onClick={() => pushParams({ date: today })}
-            className="rounded px-2.5 py-1 font-medium text-slate-600 hover:bg-slate-100"
+            className="seg-item"
           >
             Hoje
           </button>
           <button
             type="button"
             onClick={() => pushParams({ view: "month" })}
-            className={cn(
-              "rounded px-2.5 py-1 font-medium",
-              view === "month" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-            )}
+            aria-pressed={view === "month"}
+            className="seg-item"
           >
             Mês
           </button>
           <button
             type="button"
             onClick={() => pushParams({ view: "week" })}
-            className={cn(
-              "rounded px-2.5 py-1 font-medium",
-              view === "week" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-            )}
+            aria-pressed={view === "week"}
+            className="seg-item"
           >
             Semana
           </button>
         </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 px-4 py-2.5 text-xs">
-        <div className="flex rounded-md border border-slate-200 p-0.5">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line px-5 py-2.5 text-xs">
+        <div className="seg">
           <button
             type="button"
             onClick={() => pushParams({ display: "calendar" })}
-            className={cn(
-              "rounded px-2 py-1 font-medium",
-              display === "calendar" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-            )}
+            aria-pressed={display === "calendar"}
+            className="seg-item"
           >
             Calendário
           </button>
           <button
             type="button"
             onClick={() => pushParams({ display: "list" })}
-            className={cn(
-              "rounded px-2 py-1 font-medium",
-              display === "list" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
-            )}
+            aria-pressed={display === "list"}
+            className="seg-item"
           >
             Lista
           </button>
         </div>
 
-        <label className="flex items-center gap-1.5 rounded-md border border-slate-200 px-2 py-1.5 font-medium text-slate-600">
+        <div className="flex flex-wrap items-center gap-2">
+        {(Object.keys(CATEGORY_LABELS) as CalendarItem["category"][]).map((category) => (
+          <button
+            key={category}
+            type="button"
+            onClick={() => toggleCategory(category)}
+            aria-pressed={!hiddenCategories.has(category)}
+            className={cn(
+              "flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-xs font-medium transition-[opacity,border-color]",
+              CATEGORY_CHIP_CLASSES[category],
+              hiddenCategories.has(category) && "opacity-45"
+            )}
+          >
+            <span className={cn("h-1.5 w-1.5 rounded-full", CATEGORY_DOT_CLASSES[category])} />
+            {CATEGORY_LABELS[category]}
+          </button>
+        ))}
+        <label className="flex h-7 cursor-pointer items-center gap-1.5 rounded-full border border-line px-2.5 font-medium text-slate-600 hover:border-line-strong">
           <input
             type="checkbox"
             checked={showOverdue}
@@ -172,30 +184,13 @@ export function VencimentosCalendar({
           />
           Mostrar vencidos
         </label>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2 border-b border-slate-100 px-4 py-2.5">
-        {(Object.keys(CATEGORY_LABELS) as CalendarItem["category"][]).map((category) => (
-          <button
-            key={category}
-            type="button"
-            onClick={() => toggleCategory(category)}
-            className={cn(
-              "flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide transition-opacity",
-              CATEGORY_CHIP_CLASSES[category],
-              hiddenCategories.has(category) && "opacity-40"
-            )}
-          >
-            <span className={cn("h-1.5 w-1.5 rounded-full", CATEGORY_DOT_CLASSES[category])} />
-            {CATEGORY_LABELS[category]}
-          </button>
-        ))}
+        </div>
       </div>
 
       {display === "list" ? (
-        <div className="max-h-[32rem] divide-y divide-slate-100 overflow-y-auto">
+        <div className="max-h-[32rem] divide-y divide-[rgba(15,23,42,.08)] overflow-y-auto">
           {visibleItems.length === 0 ? (
-            <p className="px-4 py-10 text-center text-sm text-slate-500">Nenhum vencimento no período.</p>
+            <EmptyState icon={CalendarCheck} title="Nenhum vencimento no período" description="Mude o período ou marque “Mostrar vencidos” para ver pendências antigas." />
           ) : (
             [...visibleItems]
               .sort((a, b) => a.date.localeCompare(b.date))
@@ -203,23 +198,23 @@ export function VencimentosCalendar({
                 <Link
                   key={item.id}
                   href={item.href}
-                  className="flex items-center justify-between gap-3 px-4 py-2.5 hover:bg-slate-50"
+                  className="flex items-center justify-between gap-3 px-5 py-3 transition-colors hover:bg-[#F8FAFC]"
                 >
                   <span className="flex min-w-0 items-center gap-2">
                     <span className={cn("h-1.5 w-1.5 shrink-0 rounded-full", CATEGORY_DOT_CLASSES[item.category])} />
-                    <span className="truncate text-sm text-slate-900">{item.label}</span>
+                    <span className="truncate text-[13px] text-[#141d28]">{item.label}</span>
                   </span>
-                  <span className="shrink-0 text-xs text-slate-500">{formatDate(item.date)}</span>
+                  <span className="shrink-0 text-xs tabular-nums text-slate-500">{formatDate(item.date)}</span>
                 </Link>
               ))
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-7 border-t border-slate-100 text-xs">
+        <div className="grid grid-cols-7 text-xs">
           {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((weekday) => (
             <div
               key={weekday}
-              className="border-b border-slate-100 bg-slate-50 px-2 py-2 text-center text-[11px] font-semibold uppercase tracking-wide text-slate-500"
+              className="border-b border-line bg-[#F8FAFC] px-2 py-2 text-center text-[11px] font-semibold uppercase tracking-[.05em] text-[#6d7885]"
             >
               {weekday}.
             </div>
@@ -232,15 +227,15 @@ export function VencimentosCalendar({
               <div
                 key={day}
                 className={cn(
-                  "min-h-28 border-b border-r border-slate-100 p-2 last:border-r-0",
-                  !inCurrentMonth && "bg-slate-50/60"
+                  "min-h-28 border-b border-r border-line p-2 [&:nth-child(7n)]:border-r-0",
+                  !inCurrentMonth && "bg-[#FAFBFC]"
                 )}
               >
                 <p
                   className={cn(
-                    "mb-1.5 inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium",
-                    isCurrentDay ? "bg-slate-900 font-semibold text-white" : "text-slate-600",
-                    !inCurrentMonth && !isCurrentDay && "text-slate-300"
+                    "mb-1.5 inline-flex h-6 min-w-6 items-center justify-center rounded-full px-1 text-xs font-medium tabular-nums",
+                    isCurrentDay ? "bg-[#d95a08] font-semibold text-white" : "text-slate-600",
+                    !inCurrentMonth && !isCurrentDay && "text-slate-400/70"
                   )}
                 >
                   {format(parseISO(day), "d")}
@@ -252,7 +247,7 @@ export function VencimentosCalendar({
                       href={item.href}
                       title={item.label}
                       className={cn(
-                        "block truncate rounded-md px-1.5 py-1 text-[11px] font-semibold shadow-sm",
+                        "block truncate rounded px-1.5 py-1 text-[11px] font-medium transition-colors",
                         CATEGORY_SOLID_CLASSES[item.category]
                       )}
                     >

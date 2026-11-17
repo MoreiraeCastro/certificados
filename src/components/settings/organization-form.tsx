@@ -20,12 +20,12 @@ export function OrganizationForm({
   return (
     <form action={formAction} className="space-y-5">
       {state.error && (
-        <div className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 ring-1 ring-inset ring-red-200">
+        <div className="alert alert-danger">
           {state.error}
         </div>
       )}
       {state.success && (
-        <div className="rounded-md bg-emerald-50 px-3 py-2 text-sm text-emerald-700 ring-1 ring-inset ring-emerald-200">
+        <div className="alert alert-ok">
           Dados salvos.
         </div>
       )}

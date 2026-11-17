@@ -68,7 +68,7 @@ export function NewAlvaraModal({
     <Modal open={open} onClose={handleClose} title="Novo alvará">
       <form action={formAction} className="space-y-5">
         {state.error && (
-          <div className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 ring-1 ring-inset ring-red-200">
+          <div className="alert alert-danger">
             {state.error}
           </div>
         )}
@@ -77,18 +77,20 @@ export function NewAlvaraModal({
         {selectedCompany && <input type="hidden" name="company_id" value={selectedCompany.id} />}
 
         <div>
-          <div className="mb-2 flex rounded-md border border-slate-200 p-0.5 text-xs">
+          <div className="seg mb-3 flex w-full">
             <button
               type="button"
               onClick={() => setCompanyMode("existing")}
-              className={`flex-1 rounded px-2 py-1.5 font-medium ${companyMode === "existing" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+              aria-pressed={companyMode === "existing"}
+              className="seg-item flex-1"
             >
               Cliente já cadastrado
             </button>
             <button
               type="button"
               onClick={() => setCompanyMode("new")}
-              className={`flex-1 rounded px-2 py-1.5 font-medium ${companyMode === "new" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+              aria-pressed={companyMode === "new"}
+              className="seg-item flex-1"
             >
               Novo cliente
             </button>
@@ -96,7 +98,7 @@ export function NewAlvaraModal({
 
           {companyMode === "existing" ? (
             selectedCompany ? (
-              <div className="flex items-center justify-between rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+              <div className="flex items-center justify-between rounded-md border border-line bg-[#F8FAFC] px-3 py-2">
                 <div>
                   <p className="text-sm font-medium text-slate-900">{selectedCompany.corporate_name}</p>
                   <p className="text-xs text-slate-500">
@@ -106,7 +108,7 @@ export function NewAlvaraModal({
                 <button
                   type="button"
                   onClick={() => setSelectedCompany(null)}
-                  className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                  className="icon-btn !h-7 !w-7"
                 >
                   <X size={14} />
                 </button>
@@ -119,11 +121,11 @@ export function NewAlvaraModal({
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Buscar por nome, CNPJ, CPF ou código..."
-                    className="w-full rounded-md border-0 bg-slate-100 py-2 pl-8 pr-3 text-sm text-slate-900 placeholder:text-slate-500 focus:bg-white focus:ring-2 focus:ring-slate-900"
+                    className="field !pl-8"
                   />
                 </div>
                 {results.length > 0 && (
-                  <ul className="mt-1 max-h-40 divide-y divide-slate-100 overflow-y-auto rounded-md border border-slate-200">
+                  <ul className="mt-1 max-h-40 divide-y divide-[rgba(15,23,42,.08)] overflow-y-auto rounded-md border border-line">
                     {results.map((c) => (
                       <li key={c.id}>
                         <button
@@ -290,7 +292,7 @@ export function NewAlvaraModal({
         <div>
           <Label>Anexo (opcional)</Label>
           {file ? (
-            <div className="flex items-center justify-between rounded-md border border-slate-200 bg-slate-50 px-3 py-2">
+            <div className="flex items-center justify-between rounded-md border border-line bg-[#F8FAFC] px-3 py-2">
               <span className="flex min-w-0 items-center gap-2 text-sm text-slate-700">
                 <FileText size={14} className="shrink-0" />
                 <span className="truncate">{file.name}</span>
@@ -298,14 +300,15 @@ export function NewAlvaraModal({
               <button
                 type="button"
                 onClick={() => setFile(null)}
-                className="shrink-0 rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                aria-label="Remover arquivo"
+                className="icon-btn !h-7 !w-7 shrink-0"
               >
                 <X size={14} />
               </button>
             </div>
           ) : (
-            <label className="flex cursor-pointer items-center justify-center gap-2 rounded-md border border-dashed border-slate-300 px-3 py-3 text-xs text-slate-500 hover:border-slate-400">
-              <UploadCloud size={14} />
+            <label className="dropzone !flex-row !gap-2 !py-4 !text-xs">
+              <UploadCloud size={15} className="text-slate-400" />
               Arraste um arquivo até aqui ou clique pra selecionar
               <input
                 ref={fileInputRef}
@@ -320,7 +323,7 @@ export function NewAlvaraModal({
           <FileFormInput file={file} />
         </div>
 
-        <div className="flex gap-2 border-t border-slate-100 pt-4">
+        <div className="flex justify-end gap-2 border-t border-line pt-4">
           <Button type="submit" disabled={pending}>
             {pending ? "Salvando..." : "Salvar"}
           </Button>

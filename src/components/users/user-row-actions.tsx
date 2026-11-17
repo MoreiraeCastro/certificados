@@ -50,9 +50,7 @@ export function UserRowActions({
         type="button"
         disabled={isPending || isSelf}
         onClick={() => startTransition(() => setUserActive(profileId, !active))}
-        className={`rounded-md px-2.5 py-1 text-xs font-medium ${
-          active ? "bg-red-50 text-red-700 hover:bg-red-100" : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-        } ${isSelf ? "cursor-not-allowed opacity-50" : ""}`}
+        className={`btn btn-secondary btn-sm ${active ? "!text-[#b03a3a]" : "!text-[#1b7a51]"} ${isSelf ? "cursor-not-allowed opacity-50" : ""}`}
       >
         {active ? "Desativar" : "Ativar"}
       </button>

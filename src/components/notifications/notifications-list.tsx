@@ -1,8 +1,9 @@
 "use client";
 
+import { EmptyState } from "@/components/ui/empty-state";
 import { useTransition } from "react";
 import Link from "next/link";
-import { Download } from "@/components/icons";
+import { Download, BellOff } from "@/components/icons";
 import { cn } from "@/lib/utils/cn";
 import { StatusBadge } from "@/components/certificates/status-badge";
 import {
@@ -47,8 +48,8 @@ export function NotificationsList({ items }: { items: CombinedNotification[] }) 
 
   if (items.length === 0) {
     return (
-      <div className="rounded-md border border-dashed border-slate-300 bg-white py-16 text-center">
-        <p className="text-sm text-slate-500">Nenhuma notificação no momento.</p>
+      <div className="card">
+        <EmptyState icon={BellOff} title="Nenhuma notificação no momento" description="Vencimentos próximos e exportações prontas aparecem aqui." />
       </div>
     );
   }
@@ -61,23 +62,23 @@ export function NotificationsList({ items }: { items: CombinedNotification[] }) 
             type="button"
             disabled={isPending}
             onClick={markAllRead}
-            className="text-xs font-medium text-slate-600 hover:text-slate-900"
+            className="btn btn-secondary btn-sm"
           >
             Marcar todas como lidas
           </button>
         </div>
       )}
 
-      <div className="divide-y divide-slate-100 rounded-md border border-slate-200 bg-white">
+      <div className="card divide-y divide-[rgba(15,23,42,.08)] overflow-hidden">
         {items.map((item) =>
           item.kind === "due" ? (
             <div
               key={item.id}
-              className={cn("flex items-center justify-between gap-3 px-4 py-3", item.isRead && "opacity-60")}
+              className={cn("flex items-center justify-between gap-3 px-5 py-3.5 transition-colors hover:bg-[#F8FAFC]", item.isRead && "opacity-60")}
             >
               <Link href={`/clientes/${item.due.certificate.company_id}`} className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-slate-900">{item.due.certificate.company_corporate_name}</p>
-                <p className="mt-0.5 flex items-center gap-2 text-xs text-slate-500">
+                <p className="truncate text-[13.5px] font-medium text-[#141d28]">{item.due.certificate.company_corporate_name}</p>
+                <p className="mt-1 flex items-center gap-2 text-xs tabular-nums text-slate-500">
                   Código {item.due.certificate.company_code} · Vence {formatDate(item.due.certificate.valid_to)}
                   <StatusBadge status={item.due.certificate.status} />
                 </p>
@@ -89,19 +90,19 @@ export function NotificationsList({ items }: { items: CombinedNotification[] }) 
                   type="button"
                   disabled={isPending}
                   onClick={() => markItemRead(item)}
-                  className="shrink-0 rounded-md border border-slate-200 px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-50"
+                  className="btn btn-secondary btn-sm"
                 >
                   Marcar como lida
                 </button>
               )}
             </div>
           ) : (
-            <div key={item.id} className={cn("flex items-start gap-3 px-4 py-3", item.isRead && "opacity-60")}>
-              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600">
+            <div key={item.id} className={cn("flex items-start gap-3 px-5 py-3.5 transition-colors hover:bg-[#F8FAFC]", item.isRead && "opacity-60")}>
+              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#F7F9FB] text-slate-500 shadow-[inset_0_0_0_1px_rgba(15,23,42,.08)]">
                 <Download size={15} />
               </span>
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-slate-900">{item.activity.title}</p>
+                <p className="text-[13.5px] font-medium text-[#141d28]">{item.activity.title}</p>
                 <p className="mt-0.5 text-xs text-slate-500">{item.activity.message}</p>
                 <div className="mt-1 flex items-center gap-3">
                   {item.activity.action_path && (
@@ -109,7 +110,7 @@ export function NotificationsList({ items }: { items: CombinedNotification[] }) 
                       href={withBasePath(`/api/notifications/${item.activity.id}/download`)}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-xs font-medium text-emerald-600 hover:text-emerald-700"
+                      className="link text-xs"
                     >
                       {item.activity.action_label ?? "Baixar"}
                     </a>
@@ -120,7 +121,7 @@ export function NotificationsList({ items }: { items: CombinedNotification[] }) 
                       type="button"
                       disabled={isPending}
                       onClick={() => markItemRead(item)}
-                      className="text-xs font-medium text-slate-600 hover:text-slate-900"
+                      className="text-xs font-medium text-slate-500 hover:text-slate-900"
                     >
                       Marcar como lida
                     </button>

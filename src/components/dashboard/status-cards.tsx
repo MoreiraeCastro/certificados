@@ -39,46 +39,46 @@ export function StatusCards({
       key: "active",
       label: "Ativos",
       value: counts.active,
-      activeClasses: "border-slate-900",
-      bgClasses: "bg-white",
+      activeClasses: "after:bg-[#0F172A]",
+      bgClasses: "bg-[#94A3B8]",
       query: buildQuery({ archived: "false" }),
     },
     {
       key: "em_dia",
       label: "Em dia",
       value: counts.em_dia,
-      activeClasses: "border-emerald-600",
-      bgClasses: "bg-emerald-50",
+      activeClasses: "after:bg-[#1b7a51]",
+      bgClasses: "bg-[#1b7a51]",
       query: buildQuery({ status: "EM_DIA" }),
     },
     {
       key: "vencendo",
       label: "Vencendo",
       value: counts.vencendo,
-      activeClasses: "border-amber-600",
-      bgClasses: "bg-amber-50",
+      activeClasses: "after:bg-[#97600a]",
+      bgClasses: "bg-[#c98a1a]",
       query: buildQuery({ status: "VENCENDO" }),
     },
     {
       key: "vencido",
       label: "Vencidos",
       value: counts.vencido,
-      activeClasses: "border-red-600",
-      bgClasses: "bg-red-50",
+      activeClasses: "after:bg-[#b03a3a]",
+      bgClasses: "bg-[#b03a3a]",
       query: buildQuery({ status: "VENCIDO" }),
     },
     {
       key: "arquivado",
       label: "Arquivados",
       value: counts.arquivado,
-      activeClasses: "border-gray-500",
-      bgClasses: "bg-white",
+      activeClasses: "after:bg-[#64748B]",
+      bgClasses: "bg-[#CBD5E1]",
       query: buildQuery({ archived: "true" }),
     },
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+    <div className="kpis">
       {cards.map((card) => {
         const isActive =
           (card.key === "active" && activeArchived === "false") ||
@@ -89,14 +89,14 @@ export function StatusCards({
           <Link
             key={card.key}
             href={`?${card.query.toString()}`}
-            className={cn(
-              "rounded-lg border px-5 py-4 shadow-sm transition-colors hover:border-slate-400",
-              card.bgClasses,
-              isActive ? card.activeClasses : "border-slate-200"
-            )}
+            aria-current={isActive ? "true" : undefined}
+            className={cn("kpi", isActive && ["is-active", card.activeClasses])}
           >
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{card.label}</p>
-            <p className="mt-1 text-3xl font-bold text-slate-900">{card.value.toLocaleString("pt-BR")}</p>
+            <p className="kpi-label">
+              <span className={cn("kpi-dot", card.bgClasses)} aria-hidden="true" />
+              {card.label}
+            </p>
+            <p className="kpi-value">{card.value.toLocaleString("pt-BR")}</p>
           </Link>
         );
       })}

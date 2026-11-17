@@ -26,7 +26,7 @@ export function AlvaraTypeForm({
   return (
     <form action={formAction} className="space-y-4">
       {state.error && (
-        <div className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700 ring-1 ring-inset ring-red-200">
+        <div className="alert alert-danger">
           {state.error}
         </div>
       )}

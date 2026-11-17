@@ -53,12 +53,12 @@ export function GlobalSearch() {
           onChange={(e) => setQuery(e.target.value)}
           onFocus={() => results.length > 0 && setOpen(true)}
           placeholder="Buscar por nome, CNPJ, CPF ou código..."
-          className="w-full rounded-md border-0 bg-slate-100 py-1.5 pl-9 pr-3 text-sm text-slate-900 placeholder:text-slate-500 focus:bg-white focus:ring-2 focus:ring-slate-900"
+          className="h-9 w-full rounded-md border border-line bg-[#F8FAFC] pl-9 pr-3 text-[13px] text-slate-900 transition-[border-color,box-shadow,background-color] duration-150 placeholder:text-slate-400 hover:border-line-strong focus:border-accent focus:bg-white focus:shadow-[0_0_0_3px_rgba(217,90,8,.15)] focus:outline-none"
         />
       </div>
 
       {open && (
-        <div className="absolute z-20 mt-1 w-full max-w-lg rounded-md border border-slate-200 bg-white shadow-lg">
+        <div className="absolute z-20 mt-1 w-full max-w-lg overflow-hidden rounded-lg border border-line bg-white py-1 shadow-lg">
           {loading && <p className="px-3 py-2 text-xs text-slate-500">Buscando...</p>}
           {!loading && results.length === 0 && (
             <p className="px-3 py-2 text-xs text-slate-500">Nenhuma empresa encontrada.</p>
@@ -73,13 +73,13 @@ export function GlobalSearch() {
                     setQuery("");
                     router.push(`/clientes/${company.id}`);
                   }}
-                  className="flex w-full flex-col items-start gap-0.5 px-3 py-2 text-left text-sm hover:bg-slate-50"
+                  className="flex w-full flex-col items-start gap-0.5 px-3 py-2 text-left text-[13px] transition-colors hover:bg-[#F8FAFC]"
                 >
                   <span className="font-medium text-slate-900">
                     {company.corporate_name}
                     {company.short_name ? ` · ${company.short_name}` : ""}
                   </span>
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs tabular-nums text-slate-500">
                     Código {company.code} · {formatDocument(company.document)}
                     {company.municipality ? ` · ${company.municipality}/${company.uf}` : ""}
                   </span>
